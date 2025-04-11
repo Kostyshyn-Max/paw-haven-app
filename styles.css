@@ -1,35 +1,50 @@
-/* Existing CSS (unchanged except for the additions below) */
 body {
   margin: 0;
   padding: 0;
   font-family: Rubik, sans-serif;
   background-color: #FCF6BD;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
+
+
+header {
+  height: 100px;
+  width: 100%;
+}
+
 
 .container {
   width: 100%;
   display: flex;
   justify-content: center;
   padding: 20px 0;
+  flex: 1;
+}
+
+
+footer {
+  height: 241px;
+  width: 100%;
 }
 
 .form-container {
-  width: 800px;
-  height: 1105px;
+  width: 700px;
   max-width: 90%;
 }
 
 h1 {
   color: #18394a;
-  font-size: 28px;
-  margin-bottom: 20px;
+  font-size: 24px;
+  margin-bottom: 15px;
   text-align: left;
   padding-left: 15px;
 }
 
 .form-content {
   background-color: white;
-  padding: 30px;
+  padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border: 5px solid #18394a;
   border-radius: 18px;
@@ -38,7 +53,7 @@ h1 {
 .form-row {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 .form-group {
@@ -51,62 +66,69 @@ h1 {
 
 label {
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 5px;
   color: #18394a;
   font-weight: bold;
   font-family: Rubik, sans-serif;
+  font-size: 14px;
 }
 
 .form-control {
   width: 100%;
-  padding: 12px;
+  padding: 8px;
   border: none;
   border-radius: 12px;
   background-color: #e2e8dd;
   box-sizing: border-box;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 800;
-  color: #445c63;
+  color: rgba(47, 79, 79, 0.7);
 }
 
 textarea.form-control {
-  min-height: 80px;
+  min-height: 60px;
   resize: vertical;
-  padding-top: 20px;
+  padding-top: 15px;
   font-family: Rubik, sans-serif;
 }
 
-/* Updated placeholder styles for input and textarea */
 input.form-control::placeholder,
 textarea.form-control::placeholder {
   font-weight: bold;
-  color: #2f4f4f; /* Match the darker color of "Введіть ім'я тварини" */
+  color: rgba(47, 79, 79, 0.7);
   font-family: Rubik, sans-serif;
+  font-size: 12px;
 }
 
-/* For textarea, keep the top adjustment */
 textarea.form-control::placeholder {
   position: relative;
-  top: 6px;
+  top: 4px;
 }
 
-/* Style for the disabled option in select (the "placeholder" for select) */
-select.form-control option[disabled][selected] {
-  color: #2f4f4f; /* Match the placeholder color */
+select.form-control option {
+  color: rgba(47, 79, 79, 0.8);
   font-weight: bold;
   font-family: Rubik, sans-serif;
+  font-size: 12px;
 }
 
-/* Ensure the select text color doesn't override the placeholder color */
-select.form-control:invalid {
-  color: #2f4f4f; /* Match placeholder color when no valid option is selected */
+select.form-control option[disabled][selected] {
+  color: rgba(47, 79, 79, 0.7);
+  font-weight: bold;
+  font-family: Rubik, sans-serif;
+  font-size: 12px;
 }
 
 select.form-control {
   appearance: none;
   -webkit-appearance: none;
   cursor: pointer;
-  color: #445c63; /* Text color for selected options */
+  color: rgba(47, 79, 79, 0.7);
+  font-size: 12px;
+}
+
+select.form-control:invalid {
+  color: rgba(47, 79, 79, 0.7);
 }
 
 .select-wrapper {
@@ -130,7 +152,7 @@ select.form-control {
 .photo-upload {
   border: 2px dashed;
   border-radius: 20px;
-  height: 80px;
+  height: 60px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -140,14 +162,14 @@ select.form-control {
 }
 
 .photo-upload .plus {
-  font-size: 24px;
+  font-size: 20px;
   color: #18394a;
 }
 
 .photo-upload p {
   margin: 5px 0 0 0;
   color: #18394a;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .publish-btn {
@@ -155,13 +177,13 @@ select.form-control {
   color: white;
   border: none;
   border-radius: 25px;
-  padding: 14px 30px;
-  font-size: 16px;
+  padding: 12px 25px;
+  font-size: 14px;
   font-weight: bold;
   cursor: pointer;
   display: block;
-  margin: 20px auto 0;
-  width: 320px;
+  margin: 15px auto 0;
+  width: 280px;
   text-align: center;
 }
 
@@ -176,6 +198,6 @@ select.form-control {
 
   .form-group {
     width: 100%;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
   }
 }
