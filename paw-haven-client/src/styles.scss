@@ -1,0 +1,18 @@
+/* You can add global styles to this file, and also import other style files */
+@font-face {
+  font-family: 'Mariupol';
+  src: url('./assets/fonts/Mariupol-Medium.woff2') format('woff2'),
+       url('./assets/fonts/Mariupol-Medium.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Mariupol', sans-serif;
+}
+  
+* {
+  box-sizing: border-box;
+}

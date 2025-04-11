@@ -1,0 +1,60 @@
+<section class="header">
+  <div class="header__container">
+  <div class="header__left">
+    <h1 class="logo">Paw<span>Haven</span></h1>
+    
+    <button class="mobile-menu-toggle" (click)="toggleMobileMenu()" [class.active]="isMobileMenuOpen">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    
+    <nav class="nav" [class.mobile-open]="isMobileMenuOpen">
+      <div class="nav__links">
+        <a href="#" 
+           #navItem
+           (mouseenter)="onNavItemMouseEnter('Історії')" 
+           (mouseleave)="onNavItemMouseLeave()"
+           (click)="setActiveNavItem('Історії')"
+           [class.active]="activeNavItem === 'Історії'">Історії</a>
+        <a href="#" 
+           #navItem
+           (mouseenter)="onNavItemMouseEnter('Блог')" 
+           (mouseleave)="onNavItemMouseLeave()"
+           (click)="setActiveNavItem('Блог')"
+           [class.active]="activeNavItem === 'Блог'">Блог</a>
+        <a href="#" 
+           #navItem
+           (mouseenter)="onNavItemMouseEnter('Знайти друга')" 
+           (mouseleave)="onNavItemMouseLeave()"
+           (click)="setActiveNavItem('Знайти друга')"
+           [class.active]="activeNavItem === 'Знайти друга'">Знайти друга</a>
+      </div>
+      <div class="nav-indicator" [ngStyle]="indicatorStyle"></div>
+    </nav>
+  </div>
+  
+  <div class="header__right">
+    <div class="action-buttons">
+      <div class="search-wrapper">
+        <button class="icon-button search-button" (click)="toggleSearch()">
+          <img src="./assets/icons/header/search.png" alt="Search">
+        </button>
+        <app-search 
+          [isOpen]="isSearchOpen" 
+          (searchSubmit)="onSearchSubmit($event)"
+          (searchClose)="onSearchClose()">
+        </app-search>
+      </div>
+      <button class="icon-button">
+        <img src="./assets/icons/header/follow.png" alt="Favorites">
+      </button>
+      <button class="icon-button">
+        <img src="./assets/icons/header/notification.png" alt="Notifications">
+      </button>
+    </div>
+    
+    <button class="join-btn">Долучитися</button>
+  </div>
+</div>
+</section>

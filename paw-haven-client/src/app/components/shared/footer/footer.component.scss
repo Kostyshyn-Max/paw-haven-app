@@ -1,0 +1,72 @@
+@import '_variables.scss';
+
+.footer {
+    background-color: $background-color;
+    color: $text-color; 
+    padding: 2rem;
+    padding-bottom: 80px;
+  
+    &__container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+  
+    &__title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+  
+    &__slogan {
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+  
+    &__icons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+  
+      a {
+        color: inherit;
+        transition: color 0.3s ease;
+  
+        &:hover {
+          color: #000;
+        }
+      }
+    }
+  
+    &__subtitle {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+  
+    &__list {
+      list-style: none;
+      padding: 0;
+  
+      li {
+        margin-bottom: 0.5rem;
+  
+        a {
+          text-decoration: none;
+          color: inherit;
+          transition: text-decoration 0.3s;
+  
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  
+    p {
+      margin: 0.3rem 0;
+    }
+  }
+  

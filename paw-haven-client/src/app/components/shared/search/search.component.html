@@ -1,0 +1,13 @@
+<div class="search-panel" [class.open]="isOpen" #searchPanel>
+  <div class="search-container">
+    <input type="text" 
+           class="input-search" 
+           placeholder="Пошук..." 
+           [(ngModel)]="searchText" 
+           (keyup.enter)="onSearch()"
+           #searchInput>
+    <button class="search-close" (click)="closeSearch()">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+</div> 
