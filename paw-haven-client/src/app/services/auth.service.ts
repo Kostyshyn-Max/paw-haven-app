@@ -6,7 +6,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { LoginModel, UserTokenDataModel } from '../models/auth.models';
 import { Router } from '@angular/router';
 
-// Add missing interfaces for registration
+
 export interface UserCreateData {
   firstName: string;
   lastName: string;
@@ -31,7 +31,7 @@ export interface OrganisationCreateData {
 export class AuthService {
   private baseUrl = '/api';
   
-  // Authentication state observable
+  
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
   public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
@@ -40,7 +40,7 @@ export class AuthService {
     private cookieService: CookieService,
     private router: Router
   ) {
-    // Check token status after the service is fully initialized
+    
     setTimeout(() => {
       this.isAuthenticatedSubject.next(this.hasValidToken());
     }, 0);
@@ -62,7 +62,7 @@ export class AuthService {
       );
   }
 
-  // Add registration methods
+  
   registerUser(userData: UserCreateData): Observable<UserTokenDataModel> {
     const registerData = {
       FirstName: userData.firstName,
@@ -120,10 +120,10 @@ export class AuthService {
     }
   }
 
-  // Store tokens in cookies
+  
   private storeTokens(tokenData: UserTokenDataModel, rememberMe: boolean): void {
     try {
-      const expiresIn = rememberMe ? 30 : 1; // 30 days if remember me, 1 day if not
+      const expiresIn = rememberMe ? 30 : 1; 
       this.cookieService.set('token', tokenData.Token, expiresIn);
       this.cookieService.set('refreshToken', tokenData.RefreshToken, expiresIn);
     } catch (error) {
@@ -131,7 +131,7 @@ export class AuthService {
     }
   }
 
-  // Get token for HTTP interceptor
+  
   getToken(): string {
     try {
       return this.cookieService.get('token') || '';
@@ -141,12 +141,12 @@ export class AuthService {
     }
   }
 
-  // Check if user is authenticated
+  
   isAuthenticated(): boolean {
     return this.hasValidToken();
   }
 
-  // Check if valid token exists
+  
   private hasValidToken(): boolean {
     try {
       return !!this.cookieService.get('token');
@@ -156,14 +156,14 @@ export class AuthService {
     }
   }
 
-  // Error handling
+  
   private handleError(error: HttpErrorResponse) {
     let errorMessage = 'An unknown error occurred!';
     if (error.error instanceof ErrorEvent) {
-      // Client-side error
+      
       errorMessage = `Error: ${error.error.message}`;
     } else {
-      // Server-side error
+      
       errorMessage = error.error || `Server error: ${error.status}`;
     }
     return throwError(() => new Error(errorMessage));

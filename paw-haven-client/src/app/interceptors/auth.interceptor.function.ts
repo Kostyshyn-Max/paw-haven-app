@@ -11,21 +11,21 @@ export const authInterceptor: HttpInterceptorFn = (
   const authService = inject(AuthService);
   const router = inject(Router);
   
-  // Get the token from the auth service
+  
   const token = authService.getToken();
   
-  // Clone the request and add the authorization header if token exists
+  
   if (token) {
     const authReq = req.clone({
       setHeaders: { Authorization: `Bearer ${token}` }
     });
     
-    // Return the authenticated request
+    
     return next(authReq).pipe(
       catchError((error: HttpErrorResponse) => {
-        // Handle 401 Unauthorized errors
+        
         if (error.status === 401) {
-          // Token is invalid or expired
+          
           authService.logout();
           router.navigate(['/sign-in']);
         }
@@ -35,6 +35,6 @@ export const authInterceptor: HttpInterceptorFn = (
     );
   }
   
-  // If there's no token, just pass the request through
+  
   return next(req);
 };

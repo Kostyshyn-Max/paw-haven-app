@@ -40,7 +40,7 @@ export class SignInComponent {
     this.authService.login(this.email, this.password, this.rememberMe)
       .subscribe({
         next: () => {
-          // Redirect to home page on successful login
+        
           this.router.navigate(['/']);
         },
         error: (error) => {

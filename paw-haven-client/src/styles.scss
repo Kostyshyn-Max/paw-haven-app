@@ -15,6 +15,9 @@ body, html {
   overflow-x: hidden;
   position: relative;
 }
+input, textarea, select, button {
+  font-family: 'Mariupol', sans-serif;
+}
   
 * {
   box-sizing: border-box;
