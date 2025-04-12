@@ -1,26 +1,91 @@
-<section class="adoption">
-  <div class="adoption__container">
-    <div class="adoption__dog-container">
-      <div class="adoption__yellow-circle"></div>
-      <img src="assets/images/dog.jpg" alt="Такса (довгошерстний собака)" class="adoption__dog-image">
-    </div>
-    
-    <div class="adoption__content">
-      <h1 class="adoption__title">Дім для них — любов для тебе.</h1>
-      
-      <div class="testimonial">
-        <h3 class="testimonial__author">Оля і Пушок</h3>
-        <p class="testimonial__text">"Пушок з'явився у нас у найважчий час. Цей клубочок приніс стільки тепла й радості, що життя ніби почалося спочатку. Тварини теж рятують людей."</p>
+<section class="home">
+  <div class="home__hero">
+    <div class="home__content">
+      <div class="home__text-section">
+        <h1 class="home__title">Дім для них — любов для тебе.</h1>
         
-        <div class="testimonial__navigation">
-          <button class="testimonial__nav-button testimonial__nav-button--prev">&#8249;</button>
-          <button class="testimonial__nav-button testimonial__nav-button--next">&#8250;</button>
+        <div class="testimonial-container">
+          <div class="testimonial" [@testimonialFade]>
+            <h3 class="testimonial__author">{{ currentTestimonial.author }}</h3>
+            <p class="testimonial__text">{{ currentTestimonial.text }}</p>
+          </div>
+          
+          <div class="testimonial-controls">
+            <button class="testimonial-control testimonial-control--prev" (click)="previousTestimonial()" aria-label="Previous testimonial">
+              <span class="testimonial-control__arrow">‹</span>
+            </button>
+            <button class="testimonial-control testimonial-control--next" (click)="nextTestimonial()" aria-label="Next testimonial">
+              <span class="testimonial-control__arrow">›</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
-    
-    <div class="adoption__scroll-down">
-      <div class="adoption__arrow-down"></div>
+  </div>
+  
+  <img src="assets/images/home/background-dog.svg" alt="Long-haired dachshund" class="home-dog-image">
+  
+  <div class="scroll-indicator-wrapper">
+    <div class="scroll-indicator" (click)="scrollDown()" aria-label="Scroll down to see pet announcements">
+      <div class="scroll-indicator__circle">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <defs>
+            <path id="circle-path" d="M 50,50 m -37,0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" fill="none"/>
+          </defs>
+          <text>
+            <textPath xlink:href="#circle-path" startOffset="0%" class="scroll-indicator__text">
+              Дізнайся більше • Дізнайся більше • 
+            </textPath>
+          </text>
+        </svg>
+        <div class="scroll-indicator__button">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7 10L12 15L17 10" stroke="#1A3C4D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
     </div>
   </div>
 </section>
+
+<section class="pet-list" id="pet-cards">
+  <h2 class="pet-list__title">Наші пухнасті друзі</h2>
+  
+  <div *ngIf="isLoading" class="pet-list__loading">
+    <p>Завантаження оголошень...</p>
+  </div>
+  
+  <div *ngIf="errorMessage && !isLoading" class="pet-list__error">
+    <p>{{ errorMessage }}</p>
+  </div>
+  
+  <div class="pet-list__grid">
+    <app-card *ngFor="let pet of petCards" [pet]="pet" class="pet-card"></app-card>
+  </div>
+  
+  <div class="pet-list__more">
+    <button class="pet-list__more-button" routerLink="/announcements">
+      <span class="pet-list__more-text">Більше оголошень</span>
+      <span class="pet-list__more-icon">→</span>
+    </button>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="cta-section__container">
+    <div class="cta-section__content">
+      <h2 class="cta-section__title">
+        Не можеш взяти — допоможи кормом чи гривнею!</h2>
+      <p class="cta-section__text">Ми об'єднуємо тварин, які потребують домівки, та людей, готових подарувати їм любов. Приєднуйтесь до нашої спільноти та змінюйте життя на краще.</p>
+      <div class="cta-section__buttons">
+        <a routerLink="/announcements" class="cta-section__button cta-section__button--primary">Переглянути оголошення</a>
+        <a routerLink="/about" class="cta-section__button cta-section__button--secondary">Задонатити</a>
+      </div>
+    </div>
+    <div class="cta-section__image">
+      <img src="assets/images/home/dog-second.svg" alt="Щасливі домашні улюбленці" class="cta-section__img">
+    </div>
+  </div>
+</section>
+
+<div class="footer_background"></div>
