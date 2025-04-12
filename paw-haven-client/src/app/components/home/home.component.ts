@@ -5,6 +5,7 @@ import { trigger, transition, style, animate } from '@angular/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { PetCardService } from '../../services/pet-card.service';
 import { PetCard } from '../../models/pet-card.model';
+import { CardComponent } from '../shared/card/card.component';
 
 interface Testimonial {
   author: string;
@@ -14,7 +15,7 @@ interface Testimonial {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, CommonModule, HttpClientModule],
+  imports: [RouterOutlet, RouterLink, CommonModule, HttpClientModule, CardComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   animations: [
