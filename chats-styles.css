@@ -21,7 +21,6 @@ body {
   position: relative;
 }
 
-/* Додаємо псевдоелемент для фонового зображення з лапками */
 .chat-container::before {
   content: "";
   position: absolute;
@@ -29,13 +28,13 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url("paw-print.png"); /* Перевірте шлях до файлу */
+  background-image: url("paw-print.png"); 
   background-blend-mode: soft-light;
-  background-size: 1000px 600px; /* Зменшуємо розмір для кращої видимості */
-  background-repeat: no-repeat; /* Повторюємо зображення, щоб точно побачити лапки */
-  background-position: center; /* Центруємо зображення */
-  filter: grayscale(100%); /* Робимо лапки сірими */
-  opacity: 0.5; /* Додаємо прозорість, щоб лапки не перекривали текст */
+  background-size: 965px 650px; 
+  background-repeat: repeat; 
+  background-position: center; 
+  filter: grayscale(100%); 
+  opacity: 0.5; 
 }
 
 .chat-container h2 {
