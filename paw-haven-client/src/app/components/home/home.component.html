@@ -60,29 +60,7 @@
   </div>
   
   <div class="pet-list__grid">
-    <div *ngFor="let pet of petCards" class="pet-card">
-      <div class="pet-card__content">
-        <img class="pet-card__photo" [src]="getPetImageUrl(pet)" [alt]="pet.name || 'Домашня тварина'" loading="lazy" />
-        <div class="pet-card__info">
-          <p class="pet-card__name">
-            {{ pet.name || 'Без імені' }} <span class="pet-card__type">{{ getPetType(pet) }}</span>
-          </p>
-          <p class="pet-card__details">
-            <span class="pet-card__location">{{ getPetLocation(pet) }}</span>
-            <span class="pet-card__separator"> · </span>
-            <span class="pet-card__age">{{ getAgeText(pet.age || 0) }}</span>
-          </p>
-          <div class="pet-card__actions">
-            <button class="pet-card__button" (click)="navigateToPetDetails(pet.name)">
-              <span>Деталі</span>
-            </button>
-            <button class="pet-card__favorite" aria-label="Додати до обраного">
-              <img src="assets/icons/main/follow.svg" alt="Favorite">
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <app-card *ngFor="let pet of petCards" [pet]="pet" class="pet-card"></app-card>
   </div>
   
   <div class="pet-list__more">
