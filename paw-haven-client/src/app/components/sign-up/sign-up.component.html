@@ -10,7 +10,7 @@
       </div>
   
       <form class="auth__form" (ngSubmit)="register()">
-        <!-- User type selection -->
+        
         <div class="auth__user-type">
           <div class="auth__type-title">Я:</div>
           <div class="auth__type-buttons">
@@ -79,7 +79,7 @@
           </div>
         </div>
   
-        <!-- Organization category dropdown (only for organizations) -->
+
         <div class="auth__field" *ngIf="userType === 'organization'">
           <label for="category" class="auth__label">Категорія організації</label>
           <div class="auth__input-wrapper">

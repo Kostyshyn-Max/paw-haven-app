@@ -19,7 +19,7 @@ export class ApiService {
     private cookieService: CookieService
   ) { }
 
-  // Auth endpoints
+  
   login(loginData: LoginModel): Observable<UserTokenDataModel> {
     return this.http.post<UserTokenDataModel>(`${this.baseUrl}/user/login`, loginData)
       .pipe(
@@ -54,7 +54,7 @@ export class ApiService {
     this.cookieService.delete('refreshToken');
   }
 
-  // Organization categories
+  
   getOrganisationCategories(): Observable<OrganisationCategory[]> {
     return this.http.get<OrganisationCategory[]>(`${this.baseUrl}/organisationcategory`)
       .pipe(
@@ -62,27 +62,27 @@ export class ApiService {
       );
   }
 
-  // Helper methods
+  
   private storeTokens(tokenData: UserTokenDataModel): void {
-    // Store tokens in cookies (consider setting secure and HTTP only flags in production)
-    this.cookieService.set('token', tokenData.Token, { expires: new Date(new Date().getTime() + 15 * 60 * 1000) }); // 15 minutes
-    this.cookieService.set('refreshToken', tokenData.RefreshToken, { expires: 30 }); // 30 days is typical
+    
+    this.cookieService.set('token', tokenData.Token, { expires: new Date(new Date().getTime() + 15 * 60 * 1000) }); 
+    this.cookieService.set('refreshToken', tokenData.RefreshToken, { expires: 30 }); 
     this.refreshTokenSubject.next(tokenData.Token);
   }
 
   private handleError(error: HttpErrorResponse) {
     let errorMessage = 'An unknown error occurred!';
     if (error.error instanceof ErrorEvent) {
-      // Client-side error
+      
       errorMessage = `Error: ${error.error.message}`;
     } else {
-      // Server-side error
+      
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
     return throwError(() => new Error(errorMessage));
   }
 
-  // Method to handle token refresh when a request fails with 401
+  
   handleUnauthorizedError(request: any, next: any) {
     if (!this.isRefreshing) {
       this.isRefreshing = true;
@@ -120,12 +120,12 @@ export class ApiService {
     });
   }
 
-  // Get token for HTTP interceptor
+  
   getToken(): string {
     return this.cookieService.get('token');
   }
 
-  // Check if user is logged in
+  
   isLoggedIn(): boolean {
     return !!this.cookieService.get('token');
   }
