@@ -23,7 +23,7 @@ body {
   justify-content: space-between;
 }
 
-/* Додаємо псевдоелемент для фонового зображення */
+
 .chat-window::before {
   content: "";
   position: absolute;
@@ -33,8 +33,8 @@ body {
   height: 100%;
   background-image: url("paw-print.png");
   background-blend-mode: soft-light;
-  background-size: 800px 400px;
-  background-repeat: no-repeat;
+  background-size: 760px 350px;
+  background-repeat: repeat;
   filter: grayscale(100%); /* Застосовуємо фільтр лише до лапок */
   opacity: 0.5;
 }
@@ -85,7 +85,7 @@ body {
 .chat-input input {
   flex-grow: 1;
   padding: 12px;
-  border-radius: 20px;
+  border-radius: 10px;
   border: 2px solid #143642;
   outline: none;
   font-size: 15px;
