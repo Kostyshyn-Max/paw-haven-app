@@ -83,7 +83,6 @@ export class HeaderComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   closeAccountMenu(): void {
-    // Scroll to top before navigation
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
     this.isAccountMenuOpen = false;
