@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { PetCardService } from '../../services/pet-card.service';
 import { PetCard } from '../../models/pet-card.model';
 import { CardComponent } from '../shared/card/card.component';
+import { PawLoaderComponent } from '../shared/paw-loader/paw-loader.component';
 
 interface Testimonial {
   author: string;
@@ -15,7 +16,7 @@ interface Testimonial {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, CommonModule, HttpClientModule, CardComponent],
+  imports: [RouterOutlet, RouterLink, CommonModule, HttpClientModule, CardComponent, PawLoaderComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   animations: [

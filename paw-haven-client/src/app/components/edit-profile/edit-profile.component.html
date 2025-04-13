@@ -1,0 +1,148 @@
+<div class="edit-profile-container">
+  <div *ngIf="loading" class="loading-state">
+    <p>Завантаження інформації про профіль...</p>
+    <div class="spinner-container">
+      <div class="spinner"></div>
+    </div>
+  </div>
+  
+  <div *ngIf="error" class="error-message">
+    <p>{{ error }}</p>
+  </div>
+  
+  <div *ngIf="!loading && !error && userProfile" class="edit-profile-content">
+    <h2>Редагувати профіль</h2>
+    
+    <div *ngIf="success" class="success-message">
+      <p>Профіль успішно оновлено! Перенаправлення...</p>
+    </div>
+    
+    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="edit-profile-form">
+      <div class="form-section">
+        <h3>Особиста інформація</h3>
+        
+        <div class="form-group">
+          <label for="firstName">Імʼя *</label>
+          <input 
+            id="firstName" 
+            type="text" 
+            formControlName="firstName" 
+            class="form-control"
+            [class.is-invalid]="profileForm.get('firstName')?.invalid && profileForm.get('firstName')?.touched"
+          >
+          <div class="validation-error" *ngIf="profileForm.get('firstName')?.invalid && profileForm.get('firstName')?.touched">
+            <span *ngIf="profileForm.get('firstName')?.errors?.['required']">Ім'я обов'язкове</span>
+            <span *ngIf="profileForm.get('firstName')?.errors?.['minlength']">Ім'я повинно містити не менше 5 символів</span>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="lastName">Прізвиище</label>
+          <input 
+            id="lastName" 
+            type="text" 
+            formControlName="lastName" 
+            class="form-control"
+            [class.is-invalid]="profileForm.get('lastName')?.invalid && profileForm.get('lastName')?.touched"
+          >
+          <div class="validation-error" *ngIf="profileForm.get('lastName')?.invalid && profileForm.get('lastName')?.touched">
+            <span *ngIf="profileForm.get('lastName')?.errors?.['required']">Прізвище обов'язкове</span>
+            <span *ngIf="profileForm.get('lastName')?.errors?.['minlength']">Прізвище повинно містити не менше 5 символів</span>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="email">Електронна адреса *</label>
+          <input 
+            id="email" 
+            type="email" 
+            formControlName="email" 
+            class="form-control"
+            [class.is-invalid]="profileForm.get('email')?.invalid && profileForm.get('email')?.touched"
+          >
+          <div class="validation-error" *ngIf="profileForm.get('email')?.invalid && profileForm.get('email')?.touched">
+            <span *ngIf="profileForm.get('email')?.errors?.['required']">Обов'язкова наявність електронної пошти</span>
+            <span *ngIf="profileForm.get('email')?.errors?.['email']">Будь ласка, введіть дійсну адресу електронної пошти</span>
+          </div>
+        </div>
+        
+
+      </div>
+      
+      <!-- Organization Information Section - Only shown for organization owners -->
+      <div class="form-section" *ngIf="userProfile.isOrganisationOwner">
+        <h3>Інформація про організацію</h3>
+        
+        <div class="form-group">
+          <label for="organisationName">Назва організації *</label>
+          <input 
+            id="organisationName" 
+            type="text" 
+            formControlName="organisationName" 
+            class="form-control"
+            [class.is-invalid]="profileForm.get('organisationName')?.invalid && profileForm.get('organisationName')?.touched"
+          >
+          <div class="validation-error" *ngIf="profileForm.get('organisationName')?.invalid && profileForm.get('organisationName')?.touched">
+            <span *ngIf="profileForm.get('organisationName')?.errors?.['required']">Organisation name is required</span>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="organisationDescription">Опис</label>
+          <textarea 
+            id="organisationDescription" 
+            formControlName="organisationDescription" 
+            class="form-control"
+            rows="4"
+            placeholder="Tell us about your organization and its mission..."
+          ></textarea>
+        </div>
+        
+        <div class="form-group">
+          <label for="organisationLocation">Розсташуання</label>
+          <input 
+            id="organisationLocation" 
+            type="text" 
+            formControlName="organisationLocation" 
+            class="form-control"
+            placeholder="City, Country"
+          >
+        </div>
+        
+        <div class="form-group">
+          <label for="organisationPhoneNumber">Номер телефону</label>
+          <input 
+            id="organisationPhoneNumber" 
+            type="text" 
+            formControlName="organisationPhoneNumber" 
+            class="form-control"
+            placeholder="+380 12 323 23 23"
+          >
+        </div>
+        
+        <div class="form-group">
+          <label for="organisationDonationCredentials">Інформація для пожертви</label>
+          <textarea 
+            id="organisationDonationCredentials" 
+            formControlName="organisationDonationCredentials" 
+            class="form-control"
+            rows="3"
+            placeholder="Bank account details, PayPal, or other payment information"
+          ></textarea>
+          <small class="form-text">Ця інформація буде видимою для користувачів, які бажають зробити пожертву на користь вашої організації</small>
+        </div>
+      </div>
+      
+      <div class="form-actions">
+        <button type="button" class="cancel-button" (click)="cancel()">Відмінити</button>
+        <button 
+          type="submit" 
+          class="save-button" 
+          [disabled]="profileForm.invalid || saving"
+        >
+          {{ saving ? 'Зберігання...' : 'Зберегти зміни' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

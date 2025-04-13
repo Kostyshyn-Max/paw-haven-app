@@ -52,7 +52,10 @@
   <h2 class="pet-list__title">Наші пухнасті друзі</h2>
   
   <div *ngIf="isLoading" class="pet-list__loading">
-    <p>Завантаження оголошень...</p>
+    <app-paw-loader 
+      message="Завантаження оголошень..." 
+      size="medium">
+    </app-paw-loader>
   </div>
   
   <div *ngIf="errorMessage && !isLoading" class="pet-list__error">
@@ -64,7 +67,7 @@
   </div>
   
   <div class="pet-list__more">
-    <button class="pet-list__more-button" routerLink="/announcements">
+    <button class="pet-list__more-button" routerLink="/pets">
       <span class="pet-list__more-text">Більше оголошень</span>
       <span class="pet-list__more-icon">→</span>
     </button>
@@ -78,7 +81,7 @@
         Не можеш взяти — допоможи кормом чи гривнею!</h2>
       <p class="cta-section__text">Ми об'єднуємо тварин, які потребують домівки, та людей, готових подарувати їм любов. Приєднуйтесь до нашої спільноти та змінюйте життя на краще.</p>
       <div class="cta-section__buttons">
-        <a routerLink="/announcements" class="cta-section__button cta-section__button--primary">Переглянути оголошення</a>
+        <a routerLink="/pets" class="cta-section__button cta-section__button--primary">Переглянути оголошення</a>
         <a routerLink="/about" class="cta-section__button cta-section__button--secondary">Задонатити</a>
       </div>
     </div>

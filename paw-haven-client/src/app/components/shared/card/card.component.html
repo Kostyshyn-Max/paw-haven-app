@@ -10,13 +10,13 @@
         <span class="pet-card__age">{{ getAgeText(pet.age || 0) }}</span>
       </p>
       <div class="pet-card__actions">
-        <button class="pet-card__button" (click)="navigateToPetDetails(pet.name)">
+        <button class="pet-card__button" (click)="navigateToPetDetails(pet.name)" (click)="scrollToTop()">
           <span>Деталі</span>
         </button>
-        <button class="pet-card__favorite" aria-label="Додати до обраного">
-          <img src="assets/icons/main/follow.svg" alt="Favorite">
+        <button class="pet-card__favorite" aria-label="Додати до обраного" (click)="toggleFavourite()">
+          <img *ngIf="isSavedByUser" src="assets/icons/main/follow-active.svg" alt="Favorite">
+          <img *ngIf="!isSavedByUser" src="assets/icons/main/follow.svg" alt="Favorite">
         </button>
       </div>
     </div>
   </div>
-  

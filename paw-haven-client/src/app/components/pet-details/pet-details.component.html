@@ -1,0 +1,191 @@
+<div class="pet-details__container">
+  <div class="pet-details__back-button-container">
+    <button class="pet-details__back-button" (click)="goBack()">
+      <img src="assets/icons/arrow-left.svg" alt="Назад" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'24\' height=\'24\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'><path d=\'M19 12H5M12 19l-7-7 7-7\'/></svg>'">
+      <span>Назад</span>
+    </button>
+  </div>
+
+  <div *ngIf="petDetails" class="pet-details__card">
+
+
+    
+    <div class="pet-details__card-header">
+      <div class="pet-details__carousel-container">
+        <!-- Головне зображення -->
+        <div class="pet-details__photo-main">
+          <button *ngIf="petDetails?.photos && petDetails.photos.length > 1" class="pet-details__arrow-button pet-details__arrow-button--left" (click)="prevImage()">
+            <img src="assets/icons/pet-details/arrow-left.svg" alt="Стрілка вліво" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'24\' height=\'24\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'><path d=\'M19 12H5M12 19l-7-7 7-7\'/></svg>'">
+          </button>
+          
+          <div class="pet-details__photo-wrapper">
+            <img [src]="petDetails.photos && petDetails.photos.length > 0 ? petDetails.photos[selectedPhotoIndex].petPhotoLink : 'assets/images/placeholder-pet.jpg'" alt="Фото тварини" class="pet-details__main-photo" />
+            
+            <!-- Індикатор кількості фото -->
+            <div class="pet-details__photo-counter" *ngIf="petDetails?.photos && petDetails.photos.length > 1">
+              {{ selectedPhotoIndex + 1 }} / {{ petDetails.photos.length }}
+            </div>
+          </div>
+          
+          <button *ngIf="petDetails?.photos && petDetails.photos.length > 1" class="pet-details__arrow-button pet-details__arrow-button--right" (click)="nextImage()">
+            <img src="assets/icons/pet-details/arrow-right.svg" alt="Стрілка вправо" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'24\' height=\'24\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'><path d=\'M5 12h14M12 5l7 7-7 7\'/></svg>'">
+          </button>
+        </div>
+        
+        <!-- Мініатюри зображень -->
+        <div class="pet-details__thumbnails" *ngIf="petDetails?.photos && petDetails.photos.length > 1">
+          <div 
+            *ngFor="let photo of petDetails.photos; let i = index" 
+            class="pet-details__thumbnail-item" 
+            [class.active]="i === selectedPhotoIndex"
+            (click)="selectImage(i)">
+            <img [src]="photo.petPhotoLink" alt="Мініатюра фото тварини" />
+          </div>
+        </div>
+      </div>
+      
+      <div class="pet-details__card-hero">
+        <div class="hero__head">
+          <div class="pet-details__name-block">
+              <h1>{{petDetails?.name}}</h1>
+              <h2>/{{petDetails?.petType?.title}}/</h2>
+          </div>
+          <div class="pet-details__action-row">
+            <div class="pet-details__posted-by">
+              <div class="pet-details__views">
+                <p>{{ petDetails?.views }}</p>
+                <img src="assets/icons/eye.svg" alt="Кількість переглядів" onerror="this.src='assets/icons/lock.svg'" />
+              </div>
+              <div class="info">
+                <p *ngIf="petDetails?.user?.isOrganisationOwner">Опубліковано: організацією</p>
+                <p *ngIf="!petDetails?.user?.isOrganisationOwner">Опубліковано: волонтером</p>
+              </div>
+            </div>
+            <button class="pet-details__favorite-button" (click)="toggleFavorite()">
+              <img *ngIf="isFavorite" src="assets/icons/main/follow-active.svg" alt="В обраному">
+              <img *ngIf="!isFavorite" src="assets/icons/main/follow.svg" alt="Додати в обране">
+            </button>
+          </div>
+        </div>
+
+        <div class="pet-details__general">
+          <div class="pet-details__info-item">
+            <label>Вік: </label>
+            <p>{{ getAgeText(petDetails?.age || 0) }}</p>
+          </div>
+          <div class="pet-details__info-item">
+            <label>Стать: </label>
+            <p>{{ petDetails?.gender }}</p>
+          </div>
+          <div class="pet-details__info-item">
+            <label>Стан здоров`я: </label>
+            <p>{{ petDetails?.healthStatus?.title }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pet-details__body">
+      <div class="pet-details__info-item">
+        <label>Місцезнаходження: </label>
+        <p>{{ petDetails?.location }}</p>
+      </div>
+      <div class="pet-details__info-item">
+        <label>Опис: </label>
+        <p>{{ petDetails?.description }}</p>
+      </div>
+      <div class="pet-details__info-item">
+        <label>Медична історія: </label>
+        <p>{{ petDetails?.health }}</p>
+      </div>
+    </div>
+    <div class="pet-details__footer">
+      <div class="footer__head">
+        <h2 *ngIf="petDetails?.user?.isOrganisationOwner" class="pet-details__section-title">Інформація про організацію: </h2>
+        <h2 *ngIf="!petDetails?.user?.isOrganisationOwner" class="pet-details__section-title">Інформація про волонтера: </h2>
+      </div>
+      <div *ngIf="petDetails?.user?.isOrganisationOwner" class="pet-details__contact-info">
+        <div class="pet-details__info-item">
+          <label>Організація: </label>
+          <p>{{ petDetails?.user?.organisation?.name }}</p>
+        </div>
+        <div class="pet-details__info-item">
+          <label>Місце розташування центру:</label>
+          <p>{{ petDetails?.user?.organisation?.location }}</p>
+        </div>
+        <div class="pet-details__info-item">
+          <label>Контактна інформація:</label>
+          <a [href]="'tel:' + (petDetails?.user?.organisation?.phoneNumber)" class="pet-details__contact-link">
+            <img src="assets/icons/phone.svg" alt="Телефон" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'24\' height=\'24\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'><path d=\'M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z\'/></svg>'">
+            {{ petDetails?.user?.organisation?.phoneNumber }}
+          </a>
+          <br/>
+          <a [href]="'mailto:' + (petDetails?.user?.email)" class="pet-details__contact-link">
+            <img src="assets/icons/mail.svg" alt="Email" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'24\' height=\'24\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'><path d=\'M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z\'/><polyline points=\'22,6 12,13 2,6\'/></svg>'">
+            {{ petDetails?.user?.email }}
+          </a>
+        </div>
+      </div>
+      <div *ngIf="!petDetails?.user?.isOrganisationOwner" class="pet-details__contact-info">
+        <div class="pet-details__info-item">
+          <label>Волонтер: </label>
+          <p>{{ petDetails?.user?.firstName }} {{ petDetails?.user?.lastName }}</p>
+        </div>
+        <div class="pet-details__info-item">
+          <label>Контактна інформація: </label>
+          <a [href]="'mailto:' + (petDetails?.user?.email)" class="pet-details__contact-link">
+            <img src="assets/icons/mail.svg" alt="Email" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'24\' height=\'24\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'><path d=\'M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z\'/><polyline points=\'22,6 12,13 2,6\'/></svg>'">
+            {{ petDetails?.user?.email }}
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="pet-details__responsibility-info">
+      <h2 class="pet-details__section-title">Важлива інформація:</h2>
+      <div class="pet-details__responsibility-content">
+        <div class="pet-details__responsibility-item">
+          <p class="pet-details__responsibility-title">Готові до нового друга?</p>
+          <p class="pet-details__responsibility-text">Підготуйте простір. Переконайтесь, що у вашому домі є безпечне, комфортне місце для нового улюбленця — чи це клітка для папуги, куточок для кота, або тераріум для ящірки.</p>
+        </div>
+        
+        <div class="pet-details__responsibility-item">
+          <p class="pet-details__responsibility-title">Врахуйте характер і потреби</p>
+          <p class="pet-details__responsibility-text">Кожна тварина має свій темп, звички й потреби. Деякі потребують багато спілкування (наприклад, щурики чи собаки), інші — більше спокою (як деякі кішки чи рибки).</p>
+        </div>
+        
+        <div class="pet-details__responsibility-item">
+          <p class="pet-details__responsibility-title">Домашній улюбленець — це не на тиждень.</p>
+          <p class="pet-details__responsibility-text">Це друг на роки. Годування, візити до ветеринара, увага і любов — усе це входить у «пакет» справжнього господаря.</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="pet-details__buttons">
+      <h2 class="pet-details__section-title">Основні дії:</h2>
+      <div class="pet-details__buttons-container">
+        <button class="pet-details__action-button pet-details__adopt-button">
+          <img src="assets/icons/home.svg" alt="Домівка" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'24\' height=\'24\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'white\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'><path d=\'M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\'/><polyline points=\'9 22 9 12 15 12 15 22\'/></svg>'">
+          Подарувати дім
+        </button>
+        <button class="pet-details__action-button pet-details__contact-button">
+          <img src="assets/icons/message.svg" alt="Повідомлення" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'24\' height=\'24\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'white\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'><path d=\'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z\'/></svg>'">
+          Зв'язатись
+        </button>
+        <a [href]="(petDetails?.user?.organisation?.donationCredentials)" target="_blank" *ngIf="petDetails?.user?.isOrganisationOwner" class="pet-details__action-button pet-details__donate-button">
+          <img src="assets/icons/heart.svg" alt="Серце" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'24\' height=\'24\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'white\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'><path d=\'M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z\'/></svg>'">
+          Підтримати тварину
+        </a>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="isLoading" class="pet-details__loading">
+    <app-paw-loader 
+      message="Завантаження інформації про тварину..." 
+      size="large">
+    </app-paw-loader>
+  </div>
+  <div *ngIf="!isLoading && !petDetails" class="pet-details__error">
+    <p>Не вдалося завантажити інформацію про тварину. Спробуйте оновити сторінку.</p>
+    <button class="pet-details__action-button" (click)="reloadPage()">Оновити сторінку</button>
+  </div>
+</div>

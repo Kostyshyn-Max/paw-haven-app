@@ -1,0 +1,275 @@
+@import '../../../assets/styles/variables';
+
+
+.pets{
+
+  margin: 0 auto;
+  padding: 2rem 1rem 4rem;
+  background-color: $background4-color;
+  display: flex;
+align-items: center;
+justify-content: center;
+}
+.pets-container{
+    max-width: 1200px;
+}
+.pets-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  
+  .pets-title {
+    font-size: 2.5rem;
+    color: $primary-color;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+  }
+  
+  .pets-subtitle {
+    font-size: 1.1rem;
+    color: $text-color;
+    max-width: 600px;
+    margin: 0 auto;
+    opacity: 0.8;
+  }
+}
+
+.filter-container {
+  margin-bottom: 2.5rem;
+}
+
+.filter-panel {
+  background-color: $header-background;
+  border-radius: $border-radius-md;
+  box-shadow: $box-shadow-md;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  
+  @media (min-width: 768px) {
+    flex-direction: row;
+    align-items: flex-end;
+    flex-wrap: wrap;
+  }
+}
+
+.search-box {
+  position: relative;
+  flex: 1;
+  min-width: 250px;
+  
+  .search-input {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    padding-right: 3rem;
+    border: 1px solid $background4-color;
+    border-radius: $border-radius-sm;
+    font-size: 1rem;
+    transition: $transition-standard;
+    
+    &:focus {
+      outline: none;
+      border-color: $primary-color;
+      box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
+    }
+  }
+  
+  .search-button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    color: $primary-color;
+    cursor: pointer;
+  }
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  flex: 2;
+  
+  .filter-group {
+    flex: 1;
+    min-width: 150px;
+  }
+  
+  .filter-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    color: $text-color;
+    opacity: 0.8;
+    font-weight: 500;
+  }
+  
+  .filter-select-wrapper {
+    position: relative;
+    
+    .filter-select {
+      width: 100%;
+      padding: 0.875rem 1rem;
+      appearance: none;
+      border: 1px solid $background4-color;
+      border-radius: $border-radius-sm;
+      font-size: 1rem;
+      background-color: $header-background;
+      cursor: pointer;
+      transition: $transition-standard;
+      color: $text-color;
+      
+      &:focus {
+        outline: none;
+        border-color: $primary-color;
+        box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
+      }
+    }
+    
+    .select-arrow {
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      color: $text-color;
+      opacity: 0.6;
+    }
+  }
+  
+  .location-input-wrapper {
+    position: relative;
+    
+    .location-input {
+      width: 100%;
+      padding: 0.875rem 1rem;
+      border: 1px solid $background4-color;
+      border-radius: $border-radius-sm;
+      font-size: 1rem;
+      background-color: $header-background;
+      transition: $transition-standard;
+      color: $text-color;
+      
+      &:focus {
+        outline: none;
+        border-color: $primary-color;
+        box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
+      }
+      
+      &::placeholder {
+        color: $text-color;
+        opacity: 0.5;
+      }
+    }
+  }
+}
+
+.clear-filters-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.5rem;
+  background-color: $background4-color;
+  border: none;
+  border-radius: $border-radius-sm;
+  color: $text-color;
+  font-weight: 500;
+  cursor: pointer;
+  transition: $transition-standard;
+  
+  &:hover {
+    background-color: darken($background4-color, 5%);
+  }
+  
+  svg {
+    color: $text-color;
+    opacity: 0.7;
+  }
+}
+
+.pets-content {
+  min-height: 300px;
+}
+
+.pets-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  
+  .spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba($primary-color, 0.3);
+    border-radius: 50%;
+    border-top-color: $primary-color;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  
+  p {
+    color: $text-color;
+    opacity: 0.7;
+  }
+}
+
+.pets-error {
+  text-align: center;
+  padding: 2rem;
+  color: #e53935;
+}
+
+.no-results {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem 1rem;
+  text-align: center;
+  
+  svg {
+    color: $text-color;
+    opacity: 0.6;
+    margin-bottom: 1rem;
+  }
+  
+  h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: $text-color;
+  }
+  
+  p {
+    color: $text-color;
+    opacity: 0.7;
+  }
+}
+
+.pets-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  
+  .pet-card {
+    height: 100%;
+  }
+}
+
+/* Перевизначення стилів компонента card */
+
+:host ::ng-deep {
+  .pet-card__info {
+    background-color: $background2-color !important; /* Використовуємо змінну з _variables.scss */
+  }
+}

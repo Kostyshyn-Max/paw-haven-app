@@ -1,0 +1,174 @@
+<section class="pet-add">
+  <div class="pet-add__card">
+    <button class="pet-add__back" (click)="goBack()">
+      <img src="assets/icons/arrow-left.svg" alt="Назад" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'24\' height=\'24\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'><path d=\'M19 12H5M12 19l-7-7 7-7\'/></svg>'">
+    </button>
+
+    <div class="pet-add__header">
+      <h1 class="pet-add__title">Створити нове оголошення</h1>
+    </div>
+
+    <form class="pet-add__form" (ngSubmit)="create()">
+
+      <div class="pet-add__field">
+        <label for="name" class="pet-add__label">Ім`я тварини</label>
+        <div class="pet-add__input-wrapper">
+          <img src="assets/icons/paw.svg" class="pet-add__icon" alt="Лапа" />
+          <input
+            id="name"
+            type="text"
+            name="name"
+            class="pet-add__input"
+            placeholder="Введіть ім`я тварини"
+            [(ngModel)]="name"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="pet-add__field">
+        <label for="photos" class="pet-add__label">Додайте зображення тварини</label>
+        <div class="pet-add__input-wrapper">
+          <img src="assets/icons/photo.svg" alt="Фото" class="pet-add__icon"/>
+          <input
+            class="pet-add__input pet-add__file"
+            type="file"
+            (change)="onFileSelected($event)"
+            accept="image/*"
+            multiple
+            placeholder="Виберіть одне чи декілька зображень"
+          />
+        </div>
+        <div class="pet-add__error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
+        <div class="pet-add__helper-text">Оптимальний розмір фото: до 5MB. Великі фото автоматично оптимізуються.</div>
+      </div>
+      <div class="pet-add__images" *ngIf="imagePreviews.length > 0">
+        <label class="pet-add__label">Попередній перегляд:</label>
+        <div class="pet-add__preview">
+          <div class="pet-add__preview-items" [style.transform]="'translateX(-' + currentSlideIndex * 100 / slideCount + '%)'">
+            <div class="pet-add__preview-item" *ngFor="let img of imagePreviews; let i = index">
+              <img [src]="img" alt="Image preview" class="pet-photo" />
+              <button (click)="removePhoto(i)" class="pet-add__photo-remove" type="button">
+                <img src="assets/icons/trash.svg" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pet-add__field">
+        <label for="petType" class="pet-add__label">Вид тварини</label>
+        <div class="pet-add__input-wrapper">
+          <img src="assets/icons/category.svg" alt="Категорія" class="pet-add__icon" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'24\' height=\'24\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'><path d=\'M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\'/><polyline points=\'9 22 9 12 15 12 15 22\'/></svg>'">
+          <select
+            id="petType"
+            class="pet-add__input"
+            [(ngModel)]="petType"
+            name="petType"
+            required
+          >
+            <option value="" disabled selected>Виберіть вид тварини</option>
+            <option *ngFor="let type of petTypes" [value]="type.id">{{ type.title }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="pet-add_field">
+        <label for="healthStatus" class="pet-add__label">Стан здоров`я</label>
+        <div class="pet-add__input-wrapper">
+          <img src="assets/icons/health.svg" alt="Здоров`я" class="pet-add__icon" />
+          <select
+            id="healthStatus"
+            class="pet-add__input"
+            [(ngModel)]="healthStatus"
+            name="healthStatus"
+            required
+          >
+            <option value="" disabled selected>Виберіть стан здоров`я</option>
+            <option *ngFor="let health of healthStatuses" [value]="health.id">{{ health.title }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="pet-add__field">
+        <label for="age" class="pet-add__label">Вік тварини (в місяцях)</label>
+        <div class="pet-add__input-wrapper">
+          <img src="assets/icons/sand-clock.svg" alt="Пісочний годинник" class="pet-add__icon" />
+          <input
+            id="age"
+            type="number"
+            name="age"
+            class="pet-add__input"
+            placeholder="Вік тварини"
+            [(ngModel)]="age"
+            required
+            [disabled]="isLoading"
+          />
+        </div>
+      </div>
+
+      <div class="pet-add__field">
+        <label for="gender" class="pet-add__label">Стать тварини</label>
+        <div class="pet-add__input-wrapper">
+          <img src="assets/icons/gender.svg" alt="Стать" class="pet-add__icon" />
+          <select
+            id="gender"
+            class="pet-add__input"
+            [(ngModel)]="gender"
+            name="gender"
+            required
+          >
+            <option value="" disabled selected>Виберіть стать твариин</option>
+            <option *ngFor="let gender of genders" [value]="gender" >{{ gender }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="pet-add__field">
+        <label for="health" class="pet-add__label">Медична карта</label>
+        <textarea
+          id="health"
+          class="pet-add__input"
+          [(ngModel)]="health"
+          name="health"
+          required
+          placeholder="Опишіть медичну історію тварини"
+        ></textarea>
+      </div>
+
+      <div class="pet-add__field">
+        <label for="description" class="pet-add__label">Опис</label>
+        <textarea
+          id="description"
+          class="pet-add__input"
+          [(ngModel)]="description"
+          name="description"
+          required
+          placeholder="Розкажіть про характер, звички та особливі потреби тварини..."
+        ></textarea>
+      </div>
+
+      <div class="pet-add__field">
+        <label for="location" class="pet-add__label">Місце знаходження</label>
+        <div class="pet-add__input-wrapper">
+          <img src="assets/icons/location.svg" alt="Місцезнаходження" class="pet-add__icon" />
+          <input
+            id="location"
+            type="text"
+            name="location"
+            class="pet-add__input"
+            placeholder="Укажіть місце знаходження тварини"
+            [(ngModel)]="location"
+            required
+            [disabled]="isLoading"
+          />
+        </div>
+      </div>
+
+      <button type="submit" class="pet-add__submit">
+        <span *ngIf="!isLoading">Створити</span>
+        <span *ngIf="isLoading">Додаємо оголошення...</span>
+      </button>
+    </form>
+  </div>
+</section>
