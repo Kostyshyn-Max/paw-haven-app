@@ -1,0 +1,148 @@
+<div class="blog__container">
+  <div class="blog__content">
+
+    <header class="blog__header">
+      <h1>Блог про тваринний світ</h1>
+      <p>Корисні поради, зворушливі історії та важлива інформація для власників і любителів домашніх тварин</p>
+    </header>
+    
+
+    <section class="blog__featured" *ngIf="!isLoading && featuredPosts.length > 0">
+      <h2 class="blog__featured-title">Популярні статті</h2>
+      <div class="blog__featured-grid">
+        <article class="blog__card" *ngFor="let post of featuredPosts">
+          <div class="blog__card-image">
+            <img [src]="post.imageUrl" [alt]="post.title" onerror="this.src='assets/images/placeholder-blog.jpg'">
+            <span class="category-badge">{{post.category}}</span>
+          </div>
+          <div class="blog__card-content">
+            <div class="blog__card-meta">
+              <div class="author" *ngIf="post.authorAvatar">
+                <img [src]="post.authorAvatar" [alt]="post.author" onerror="this.src='assets/images/default-avatar.jpg'">
+                <span>{{post.author}}</span>
+              </div>
+              <div class="date">{{formatDate(post.date)}}</div>
+            </div>
+            <h3 class="blog__card-title">
+              <a [routerLink]="['/blog', post.id]">{{post.title}}</a>
+            </h3>
+            <p class="blog__card-excerpt">{{post.excerpt}}</p>
+            <div class="blog__card-footer">
+              <div class="stats">
+                <div class="stat">
+                  <img src="assets/icons/eye.svg" alt="Перегляди" onerror="this.src='assets/icons/default/eye-icon.svg'">
+                  <span>{{post.views}}</span>
+                </div>
+                <div class="stat">
+                  <img src="assets/icons/heart.svg" alt="Вподобання" onerror="this.src='assets/icons/default/heart-icon.svg'">
+                  <span>{{post.likes}}</span>
+                </div>
+                <div class="stat">
+                  <img src="assets/icons/message.svg" alt="Коментарі" onerror="this.src='assets/icons/default/message-icon.svg'">
+                  <span>{{post.comments}}</span>
+                </div>
+              </div>
+              <a [routerLink]="['/blog', post.id]" class="read-more">
+                Читати далі
+                <img src="assets/icons/arrow-right.svg" alt="Читати далі" onerror="this.src='assets/icons/default/arrow-right-icon.svg'">
+              </a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+    
+
+    <div class="blog__main" *ngIf="!isLoading">
+      <section class="blog__posts">
+        <h2 class="blog__posts-title">
+          <ng-container *ngIf="!selectedCategory">Всі статті</ng-container>
+          <ng-container *ngIf="selectedCategory">{{selectedCategory}}</ng-container>
+        </h2>
+        
+        <div class="blog__posts-grid" *ngIf="getFilteredPosts().length > 0">
+          <article class="blog__card" *ngFor="let post of getFilteredPosts()">
+            <div class="blog__card-image">
+              <img [src]="post.imageUrl" [alt]="post.title" onerror="this.src='assets/images/placeholder-blog.jpg'">
+              <span class="category-badge">{{post.category}}</span>
+            </div>
+            <div class="blog__card-content">
+              <div class="blog__card-meta">
+                <div class="author" *ngIf="post.authorAvatar">
+                  <img [src]="post.authorAvatar" [alt]="post.author" onerror="this.src='assets/images/default-avatar.jpg'">
+                  <span>{{post.author}}</span>
+                </div>
+                <div class="date">{{formatDate(post.date)}}</div>
+              </div>
+              <h3 class="blog__card-title">
+                <a [routerLink]="['/blog', post.id]">{{post.title}}</a>
+              </h3>
+              <p class="blog__card-excerpt">{{post.excerpt}}</p>
+              <div class="blog__card-footer">
+                <div class="stats">
+                  <div class="stat">
+                    <img src="assets/icons/eye.svg" alt="Перегляди" onerror="this.src='assets/icons/default/eye-icon.svg'">
+                    <span>{{post.views}}</span>
+                  </div>
+                  <div class="stat">
+                    <img src="assets/icons/heart.svg" alt="Вподобання" onerror="this.src='assets/icons/default/heart-icon.svg'">
+                    <span>{{post.likes}}</span>
+                  </div>
+                  <div class="stat">
+                    <img src="assets/icons/message.svg" alt="Коментарі" onerror="this.src='assets/icons/default/message-icon.svg'">
+                    <span>{{post.comments}}</span>
+                  </div>
+                </div>
+                <a [routerLink]="['/blog', post.id]" class="read-more">
+                  Читати далі
+                  <img src="assets/icons/arrow-right.svg" alt="Читати далі" onerror="this.src='assets/icons/default/arrow-right-icon.svg'">
+                </a>
+              </div>
+            </div>
+          </article>
+        </div>
+        
+    
+        <div class="blog__empty" *ngIf="getFilteredPosts().length === 0">
+          <h3>Немає статей у цій категорії</h3>
+          <p>Спробуйте вибрати іншу категорію або переглянути всі доступні статті</p>
+          <button (click)="filterByCategory(null)">Показати всі статті</button>
+        </div>
+      </section>
+      
+      <aside class="blog__sidebar">
+        <div class="blog__sidebar-widget">
+          <h3>Категорії</h3>
+          <ul class="blog__sidebar-categories">
+            <li>
+              <button 
+                (click)="filterByCategory(null)" 
+                [class.active]="selectedCategory === null">
+                <img src="assets/icons/paw.svg" alt="Всі категорії" onerror="this.src='assets/icons/default/paw-icon.svg'">
+                Всі категорії
+                <span class="count">{{blogPosts.length}}</span>
+              </button>
+            </li>
+            <li *ngFor="let category of categories">
+              <button 
+                (click)="filterByCategory(category.name)" 
+                [class.active]="selectedCategory === category.name">
+                <img [src]="category.iconUrl" [alt]="category.name" onerror="this.src='assets/icons/default/category-icon.svg'">
+                {{category.name}}
+                <span class="count">{{category.postsCount}}</span>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+    
+
+    <div class="blog__loading" *ngIf="isLoading">
+      <app-paw-loader 
+        message="Завантаження блогу..." 
+        size="large">
+      </app-paw-loader>
+    </div>
+  </div>
+</div>
