@@ -1,0 +1,26 @@
+<div class="messages-panel" [class.open]="isOpen" #messagesPanel>
+  <div class="messages-container">
+    <div class="messages-panel__head">
+      <div class="title-container">
+        <label>Нещодавні повідомлення</label>
+      </div>
+      <button class="messages-close" (click)="closePanel()">
+        <svg width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+    <div class="messages">
+      <div class="no-text-cover" *ngIf="chats.length == 0">
+        <h2 class="no-text">Тут нічого немає</h2>
+      </div>
+      <div *ngFor="let chat of chats" class="chat">
+        <div class="chat-title">
+          <label>{{ chat.name }}</label>
+          <small>{{ chat.lastMessagePostDate }}</small>
+        </div>
+        <p class="chat-message">{{ chat.lastMessage }}</p>
+      </div>
+    </div>
+  </div>
+</div>
