@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
 import { HomeComponent } from './components/home/home.component';
+import { NewsComponent } from './components/news/news.component';
 import { PetCardFormComponent } from './components/pet-card-form/pet-card-form.component';
 import { PetDetailsComponent } from './components/pet-details/pet-details.component';
 import { PetsComponent } from './components/pets/pets.component';
@@ -15,6 +16,7 @@ export const routes: Routes = [
   { path: 'sign-in', component: SignInComponent },
   { path: 'sign-up', component: SignUpComponent },
   { path: 'home', component: HomeComponent },
+  { path: 'news', component: NewsComponent },
   { path: 'pets', component: PetsComponent },
   { path: 'pets/add', component: PetCardFormComponent },
   { path: 'pets/:id', component: PetDetailsComponent },
