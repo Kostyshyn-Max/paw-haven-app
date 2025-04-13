@@ -6,11 +6,12 @@ import { PetCardCreateData, PetHealthStatus, PetType } from '../../models/pet-ca
 import { HealthStatusService } from '../../services/health-status.service';
 import { PetCardAddService } from '../../services/pet-card-add.service';
 import { PetTypeService } from '../../services/pet-type.service';
+import { PawLoaderComponent } from '../shared/paw-loader/paw-loader.component';
 
 @Component({
   selector: 'app-pet-card-form',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, PawLoaderComponent],
   templateUrl: './pet-card-form.component.html',
   styleUrls: ['./pet-card-form.component.scss']
 })
@@ -33,6 +34,12 @@ export class PetCardFormComponent implements OnInit {
   currentSlideIndex: number = 0;
   slideCount: number = 4;
 
+  // Нові налаштування для оптимізації фото
+  maxWidth: number = 1200;  // Максимальна ширина зображення
+  maxHeight: number = 800;  // Максимальна висота зображення
+  imageQuality: number = 0.8; // Якість зображення (від 0 до 1)
+  maxImageSize: number = 5 * 1024 * 1024; // 5MB як максимальний розмір файлу
+
   constructor(
     private router: Router,
     private angularLocation: Location,
@@ -46,7 +53,7 @@ export class PetCardFormComponent implements OnInit {
     this.loadHealthStatuses();
   }
 
-  loadPetTypes() : void {
+  loadPetTypes(): void {
     this.isLoading = true;
     this.petTypeService.getTypes().subscribe({
       next: (petTypes) => {
@@ -64,7 +71,7 @@ export class PetCardFormComponent implements OnInit {
         }
         this.isLoading = false;
       }
-    })
+    });
   }
 
   loadHealthStatuses(): void {
@@ -85,7 +92,7 @@ export class PetCardFormComponent implements OnInit {
         }
         this.isLoading = false;
       }
-    })
+    });
   }
 
   goBack() {
@@ -96,16 +103,79 @@ export class PetCardFormComponent implements OnInit {
     const input = event.target as HTMLInputElement;
     if (!input.files) return;
 
-    this.photos = Array.from(input.files);
+    // Скидаємо попередні фото
+    this.photos = [];
     this.imagePreviews = [];
 
-    for (let file of this.photos) {
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.imagePreviews.push(e.target.result);
-      };
-      reader.readAsDataURL(file);
+    const selectedFiles = Array.from(input.files);
+
+    // Перевіряємо розмір кожного файлу
+    for (let file of selectedFiles) {
+      if (file.size > this.maxImageSize) {
+        this.errorMessage = `Фото "${file.name}" занадто велике. Максимальний розмір файлу - 5MB.`;
+        console.warn(this.errorMessage);
+        continue;
+      }
+
+      this.processImage(file);
     }
+  }
+
+  /**
+   * Обробляє зображення: стискає та змінює розмір перед додаванням до форми
+   */
+  processImage(file: File): void {
+    const reader = new FileReader();
+
+    reader.onload = (e: any) => {
+      const img = new Image();
+      img.onload = () => {
+        // Визначаємо, чи потрібно змінювати розмір
+        let width = img.width;
+        let height = img.height;
+
+        // Змінюємо розмір, якщо потрібно
+        if (width > this.maxWidth || height > this.maxHeight) {
+          const ratio = Math.min(this.maxWidth / width, this.maxHeight / height);
+          width *= ratio;
+          height *= ratio;
+        }
+
+        // Створюємо canvas для стиснення зображення
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+
+        if (ctx) {
+          ctx.drawImage(img, 0, 0, width, height);
+
+          // Конвертуємо canvas у стиснене зображення
+          canvas.toBlob((blob) => {
+            if (blob) {
+              // Створюємо новий File об'єкт зі стисненим зображенням
+              const optimizedFile = new File([blob], file.name, {
+                type: 'image/jpeg',
+                lastModified: new Date().getTime()
+              });
+
+              // Додаємо оптимізоване фото до списку
+              this.photos.push(optimizedFile);
+
+              // Додаємо попередній перегляд
+              const reader = new FileReader();
+              reader.onload = (e: any) => {
+                this.imagePreviews.push(e.target.result);
+              };
+              reader.readAsDataURL(optimizedFile);
+            }
+          }, 'image/jpeg', this.imageQuality);
+        }
+      };
+      img.src = e.target.result;
+    };
+
+    reader.readAsDataURL(file);
   }
 
   removePhoto(index: number): void {
@@ -114,6 +184,11 @@ export class PetCardFormComponent implements OnInit {
   }
 
   create() {
+    if (this.photos.length === 0) {
+      this.errorMessage = 'Будь ласка, додайте хоча б одне фото тварини.';
+      return;
+    }
+
     this.isLoading = true;
 
     const petCardData: PetCardCreateData = {
@@ -126,14 +201,14 @@ export class PetCardFormComponent implements OnInit {
       healthStatusId: parseInt(this.healthStatus),
       petTypeId: parseInt(this.petType),
       photos: this.photos
-    }
+    };
 
     console.log(petCardData);
 
     this.petCardAddService.addPetCard(petCardData).subscribe({
       next: (result) => {
         console.log("Added succesfully: ", result);
-        this.router.navigate(['/'])
+        this.router.navigate(['/']);
       },
       error: (error) => {
         this.errorMessage = 'Помилка при створенні картки. Спробуйте ще раз.';

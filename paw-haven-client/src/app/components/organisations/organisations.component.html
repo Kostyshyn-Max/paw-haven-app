@@ -1,0 +1,62 @@
+<div class="organisations-container">
+  <div class="main-content">
+    <h1>Організації з турботи про тварин</h1>
+
+    <app-paw-loader *ngIf="isLoading"></app-paw-loader>
+
+    <div *ngIf="error" class="error-message">
+      <i class="fa fa-exclamation-circle"></i>
+      Не вдалося завантажити організації. Будь ласка, спробуйте пізніше.
+    </div>
+
+    <div *ngIf="!isLoading && !error" class="organisations-grid">
+      <div *ngFor="let org of organizations" class="organisation-card">
+        <div class="organisation-logo-placeholder">
+          <div class="initials">{{ getInitials(org.name) }}</div>
+          <i class="fa fa-building org-icon"></i>
+        </div>
+        <div class="organisation-info">
+          <h2>{{ org.name }}</h2>
+          <p class="description">{{ org.description || 'Опис відсутній' }}</p>
+          <div class="contact-info">
+            <p *ngIf="org.location">
+              <i class="fa fa-map-marker-alt contact-icon"></i>
+              <span>{{ org.location }}</span>
+            </p>
+            <p *ngIf="org.contactEmail">
+              <i class="fa fa-envelope contact-icon"></i>
+              <span>{{ org.contactEmail }}</span>
+            </p>
+            <p *ngIf="org.contactPhone">
+              <i class="fa fa-phone contact-icon"></i>
+              <span>{{ org.contactPhone }}</span>
+            </p>
+          </div>
+
+          <div class="pet-cards-preview" *ngIf="org.petCards && org.petCards.length > 0">
+            <h3>Тварини ({{ org.petCards.length }})</h3>
+            <div class="pet-cards-grid">
+              <div *ngFor="let pet of org.petCards.slice(0, 3)" class="pet-card-preview" (click)="navigateToPet(pet)">
+                <img [src]="pet.petPhoto?.petPhotoLink || '/assets/images/defaults/placeholder.jpg'" [alt]="pet.name">
+                <div class="pet-info">
+                  <h4>{{ pet.name }}</h4>
+                  <p>{{ pet.petType?.title || 'Невідомий тип' }}</p>
+                </div>
+              </div>
+              <div *ngIf="org.petCards.length > 3" class="more-pets" (click)="navigateToOrganisation(org)">
+                +{{ org.petCards.length - 3 }} більше
+              </div>
+            </div>
+          </div>
+          <div *ngIf="!org.petCards || org.petCards.length === 0" class="no-pets-message">
+            <p>Немає доступних тварин</p>
+          </div>
+
+          <a class="view-details" (click)="navigateToOrganisation(org)">
+            Дізнатися більше <i class="fa fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
