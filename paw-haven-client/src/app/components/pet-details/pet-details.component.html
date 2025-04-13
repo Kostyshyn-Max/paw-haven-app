@@ -1,1 +1,110 @@
-<p>pet-details works!</p>
+<div class="pet-details__container">
+  <div class="pet-details__card">
+    <div class="pet-details__card-header">
+      <div class="pet-details__carousel-container">
+        <button *ngIf="petDetails!.photos.length > 1" class="pet-details__arrow-button" (click)="prevImage()">
+          <img src="assets/icons/pet-details/arrow-left.svg" alt="Стрілка вліво" />
+        </button>
+        <div *ngIf="petDetails" class="pet-details__photo-wrapper">
+          <img [src]="petDetails!.photos[selectedPhotoIndex].petPhotoLink" alt="Фото тварини" />
+        </div>
+        <button *ngIf="petDetails!.photos.length > 1" class="pet-details__arrow-button" (click)="nextImage()">
+          <img src="assets/icons/pet-details/arrow-right.svg" alt="Стрілка вліво" />
+        </button>
+      </div>
+      <div class="pet-details__card-hero">
+        <div class="hero__head">
+          <div class="pet-details__name-block">
+              <h1>{{petDetails?.name}}</h1>
+              <h2>/{{petDetails?.petType?.title}}/</h2>
+          </div>
+          <div class="pet-details__posted-by">
+            <div class="pet-details__views">
+              <p>{{ petDetails?.views }}</p>
+              <img src="assets/icons/lock.svg" alt="Кількість переглядів" />
+            </div>
+            <div class="info">
+              <p *ngIf="petDetails?.user?.isOrganisationOwner">Опубілковано: організацією</p>
+              <p *ngIf="!petDetails?.user?.isOrganisationOwner">Опубілковано: волонтером</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="pet-details__general">
+          <div class="pet-details__info-item">
+            <label>Вік: </label>
+            <p>{{ getAgeText(petDetails?.age || 0) }}</p>
+          </div>
+          <div class="pet-details__info-item">
+            <label>Стать: </label>
+            <p>{{ petDetails?.gender }}</p>
+          </div>
+          <div class="pet-details__info-item">
+            <label>Стан здоров`я: </label>
+            <p>{{ petDetails?.healthStatus?.title }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pet-details__body">
+      <div class="pet-details__info-item">
+        <label>Місцезнаходження: </label>
+        <p>{{ petDetails?.location }}</p>
+      </div>
+      <div class="pet-details__info-item">
+        <label>Опис: </label>
+        <p>{{ petDetails?.description }}</p>
+      </div>
+      <div class="pet-details__info-item">
+        <label>Медична історія: </label>
+        <p>{{ petDetails?.health }}</p>
+      </div>
+    </div>
+    <div class="pet-details__footer">
+      <div class="footer__head">
+        <h2 *ngIf="petDetails?.user?.isOrganisationOwner" class="pet-details__section-title">Інформація про організацію: </h2>
+        <h2 *ngIf="!petDetails?.user?.isOrganisationOwner" class="pet-details__section-title">Інформація про волонтера: </h2>
+      </div>
+      <div *ngIf="petDetails?.user?.isOrganisationOwner">
+        <div class="pet-details__info-item">
+          <label>організація: </label>
+          <p>{{ petDetails?.user?.organisation?.name }}</p>
+        </div>
+        <div class="pet-details__info-item">
+          <label>Місце розташування центру:</label>
+          <p>{{ petDetails?.user?.organisation?.location }}</p>
+        </div>
+        <div class="pet-details__info-item">
+          <label>контактна інформація:</label>
+          <a [href]="'tel:' + (petDetails?.user?.organisation?.phoneNumber)">{{ petDetails?.user?.organisation?.phoneNumber }}</a>
+          <br/>
+          <a [href]="'mailto:' + (petDetails?.user?.email)">{{ petDetails?.user?.email }}</a>
+        </div>
+      </div>
+      <div *ngIf="!petDetails?.user?.isOrganisationOwner">
+        <div class="pet-details__info-item">
+          <label>Волонтер: </label>
+          <p>{{ petDetails?.user?.firstName }} {{ petDetails?.user?.lastName }}</p>
+        </div>
+        <div class="pet-details__info-item">
+          <label>Контактна інформація: </label>
+          <a [href]="'mailto:' + (petDetails?.user?.email)">{{ petDetails?.user?.email }}</a>
+        </div>
+      </div>
+    </div>
+    <div class="pet-details__buttons">
+      <h2 class="pet-details__section-title">Основні дії:</h2>
+      <div class="pet-details__buttons-container">
+        <button class="pet-details__action-button">
+          Подарувати дім
+        </button>
+        <button class="pet-details__action-button">
+          Зв`язатись
+        </button>
+        <a [href]="(petDetails?.user?.organisation?.donationCredentials)" target="_blank" *ngIf="petDetails?.user?.isOrganisationOwner" class="pet-details__action-button">
+          Підтримати тварину
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

@@ -14,7 +14,7 @@ export class PetCardService {
   constructor(private http: HttpClient) { }
 
   getFeaturedPetCards(limit: number = 6): Observable<PetCard[]> {
-    return this.http.get<PetCard[]>(`${this.apiUrl}`);
+    return this.http.get<PetCard[]>(`${this.apiUrl}/${1}/${limit}`);
   }
 
   getAllPetCards(page: number = 1, pageSize: number = 12): Observable<PetCard[]> {

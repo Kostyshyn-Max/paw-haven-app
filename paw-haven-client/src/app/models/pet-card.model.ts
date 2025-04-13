@@ -19,7 +19,8 @@ export interface PetCardDetails {
   location: string;
   description: string;
   health: string;
-  view: number;
+  gender: string;
+  views: number;
   petType: PetType;
   healthStatus: PetHealthStatus;
   photos: PetPhoto[];
