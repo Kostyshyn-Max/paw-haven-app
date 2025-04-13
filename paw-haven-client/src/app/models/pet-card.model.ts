@@ -17,7 +17,7 @@ export interface PetType {
 export interface PetCardCreateData {
   name: string;
   age: number;
-  desciption: string;
+  description: string;
   location: string;
   health: string;
   gender: string;

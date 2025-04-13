@@ -17,6 +17,7 @@
           <input
             id="name"
             type="text"
+            name="name"
             class="pet-add__input"
             placeholder="Введіть ім`я тварини"
             [(ngModel)]="name"
@@ -94,6 +95,7 @@
           <input
             id="age"
             type="number"
+            name="age"
             class="pet-add__input"
             placeholder="Вік тварини"
             [(ngModel)]="age"
@@ -127,19 +129,19 @@
           class="pet-add__input"
           [(ngModel)]="health"
           name="health"
-          required=""
+          required
           placeholder="Опишіть медичну історію тварини"
         ></textarea>
       </div>
 
       <div class="pet-add__field">
-        <label for="health" class="pet-add__label">Опис</label>
+        <label for="description" class="pet-add__label">Опис</label>
         <textarea
           id="description"
           class="pet-add__input"
           [(ngModel)]="description"
           name="description"
-          required=""
+          required
           placeholder="Розкажіть про характер, звички та особливі потреби тварини..."
         ></textarea>
       </div>
@@ -151,6 +153,7 @@
           <input
             id="location"
             type="text"
+            name="location"
             class="pet-add__input"
             placeholder="Укажіть місце знаходження тварини"
             [(ngModel)]="location"

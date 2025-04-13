@@ -119,7 +119,7 @@ export class PetCardFormComponent implements OnInit {
     const petCardData: PetCardCreateData = {
       name: this.name,
       age: this.age,
-      desciption: this.description,
+      description: this.description,
       location: this.location,
       health: this.health,
       gender: this.gender,
@@ -136,8 +136,20 @@ export class PetCardFormComponent implements OnInit {
         this.router.navigate(['/'])
       },
       error: (error) => {
-        this.errorMessage = 'Помилка при створенні картки. Спробуйте ще раз.'
-        console.error('Per card adding failed: ', error)
+        this.errorMessage = 'Помилка при створенні картки. Спробуйте ще раз.';
+        console.error('Per card adding failed: ', error);
+        console.error({
+          name: this.name,
+          age: this.age,
+          desciption: this.description,
+          location: this.location,
+          health: this.health,
+          gender: this.gender,
+          healthStatusId: parseInt(this.healthStatus),
+          petTypeId: parseInt(this.petType),
+          photos: this.photos
+        });
+        this.isLoading = false;
       },
       complete: () => {
         this.isLoading = false;

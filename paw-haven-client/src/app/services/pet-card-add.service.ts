@@ -27,7 +27,7 @@ export class PetCardAddService {
 
     formData.append('name', data.name);
     formData.append('age', data.age.toString());
-    formData.append('desciption', data.desciption);
+    formData.append('description', data.description);
     formData.append('location', data.location);
     formData.append('health', data.health);
     formData.append('gender', data.gender);
