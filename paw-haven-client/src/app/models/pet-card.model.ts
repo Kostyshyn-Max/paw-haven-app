@@ -6,8 +6,27 @@ export interface PetCard {
   petPhoto: {
     petPhotoLink: string;
   };
-  petType: {
-    id: number;
-    title: string;
-  };
+  petType: PetType
+}
+
+export interface PetType {
+  id: number;
+  title: string;
+}
+
+export interface PetCardCreateData {
+  name: string;
+  age: number;
+  desciption: string;
+  location: string;
+  health: string;
+  gender: string;
+  healthStatusId: number;
+  petTypeId: number;
+  photos: File[];
+}
+
+export interface PetHealthStatus {
+  id: number;
+  title: string;
 }
