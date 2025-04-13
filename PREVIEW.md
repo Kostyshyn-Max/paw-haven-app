@@ -16,6 +16,9 @@ This directory contains UI previews of different sections of the site.
 ### 📰 News Page
 ![News](site-images/news.png)
 
+### 📰 News Details
+![News Details](site-images/news-details.png)
+
 ### 🏢 Organisation Profile
 ![Organisation Profile](site-images/organisation_profile.png)
 
@@ -24,6 +27,9 @@ This directory contains UI previews of different sections of the site.
 
 ### 🐶 Pet Card Create Page
 ![Pet Card Create](site-images/pet-card_create.png)
+
+### 📖 Pet Stories
+![Pet Stories](site-images/pet-stories.png)
 
 ### 🐾 Pets List
 ![Pets](site-images/pets.png)
