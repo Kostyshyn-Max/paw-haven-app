@@ -1,3 +1,5 @@
+import { UserProfileModel } from "../services/user.service";
+
 export interface PetCard {
   id: number;
   name: string;
@@ -10,9 +12,28 @@ export interface PetCard {
   petType: PetType
 }
 
+export interface PetCardDetails {
+  id: number;
+  name: string;
+  age: number;
+  location: string;
+  description: string;
+  health: string;
+  gender: string;
+  views: number;
+  petType: PetType;
+  healthStatus: PetHealthStatus;
+  photos: PetPhoto[];
+  user: UserProfileModel;
+}
+
 export interface PetType {
   id: number;
   title: string;
+}
+
+export interface PetPhoto {
+  petPhotoLink: string
 }
 
 export interface PetCardCreateData {

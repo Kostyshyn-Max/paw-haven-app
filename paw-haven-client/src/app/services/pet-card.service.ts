@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { PetCard } from '../models/pet-card.model';
 import { environment } from '../../environments/environment';
+import { PetCard, PetCardDetails } from '../models/pet-card.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,7 @@ export class PetCardService {
   constructor(private http: HttpClient) { }
 
   getFeaturedPetCards(limit: number = 6): Observable<PetCard[]> {
-    return this.http.get<PetCard[]>(`${this.apiUrl}`);
+    return this.http.get<PetCard[]>(`${this.apiUrl}/${1}/${limit}`);
   }
 
   getAllPetCards(page: number = 1, pageSize: number = 12): Observable<PetCard[]> {
@@ -35,14 +35,18 @@ export class PetCardService {
     return this.http.get<PetCard[]>(`${this.apiUrl}?${params.toString()}`);
   }
 
+  getPetCardDetailsById(petCardId: number): Observable<PetCardDetails> {
+    return this.http.get<PetCardDetails>(`${this.apiUrl}/${petCardId}`);
+  }
+
   getUserPetCards(userId: string): Observable<PetCard[]> {
     console.log(`Requesting pet cards for user ID: ${userId} using direct API endpoint`);
-    
+
     return this.http.get<PetCard[]>(`${this.apiUrl}/user/${userId}`).pipe(
       tap(cards => console.log('User-specific pet cards response:', cards)),
       catchError(err => {
         console.error('Error fetching user pet cards from API:', err);
-        
+
         return this.getAllPetCards().pipe(
           tap(allCards => console.log('Fallback: got all cards, filtering client-side')),
           map(allCards => allCards.filter(card => card.ownerId === userId)),

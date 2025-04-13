@@ -16,7 +16,7 @@ import { PetTypeService } from '../../services/pet-type.service';
 })
 export class PetCardFormComponent implements OnInit {
   name: string = '';
-  age: number = 0;
+  age: number | null = null;
   gender: string = '';
   health: string = '';
   description: string = '';
@@ -118,7 +118,7 @@ export class PetCardFormComponent implements OnInit {
 
     const petCardData: PetCardCreateData = {
       name: this.name,
-      age: this.age,
+      age: this.age ?? 0,
       description: this.description,
       location: this.location,
       health: this.health,

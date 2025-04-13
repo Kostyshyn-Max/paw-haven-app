@@ -1,8 +1,13 @@
 @import '../../../assets/styles/variables';
 
+.profile-section {
+  background: linear-gradient(135deg, $background2-color 0%, lighten($background-color, 10%) 100%);
+  padding: 2rem 0;
+}
+
 .profile-container {
   max-width: 800px;
-  margin: 2rem auto;
+  margin: auto;
   padding: 1.5rem;
   background-color: #fff;
   border-radius: $border-radius-md;
@@ -53,7 +58,7 @@
     padding-bottom: 1.5rem;
     border-bottom: 1px solid #eaeaea;
   }
-  
+
   .profile-image {
     width: 120px;
     height: 120px;
@@ -61,14 +66,14 @@
     overflow: hidden;
     margin-right: 2rem;
     box-shadow: $box-shadow-sm;
-    
+
     img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
   }
-  
+
   .default-image {
     display: flex;
     align-items: center;
@@ -78,7 +83,7 @@
     font-size: 2.5rem;
     font-weight: bold;
   }
-  
+
   .profile-name {
     h2 {
       font-size: 1.8rem;
@@ -87,13 +92,13 @@
       color: $text-color;
       font-weight: bold;
     }
-    
+
     .email {
       color: $text-color;
       opacity: 0.7;
       margin: 0.5rem 0;
     }
-    
+
     .badge {
       display: inline-block;
       background-color: $background-color;
@@ -109,7 +114,7 @@
 
 .profile-details, .organisation-details {
   margin-bottom: 2rem;
-  
+
   h3 {
     font-size: 1.4rem;
     margin-bottom: 1rem;
@@ -121,7 +126,7 @@
 .organisation-details {
   padding-top: 1.5rem;
   border-top: 1px solid #eaeaea;
-  
+
   h3 {
     color: $text-color;
   }
@@ -151,7 +156,7 @@
     margin-bottom: 0.5rem;
     font-weight: 500;
   }
-  
+
   p {
     font-size: 1.1rem;
     margin: 0;
@@ -166,7 +171,7 @@
   display: flex;
   justify-content: flex-end;
   gap: 1rem;
-  
+
   .edit-button {
     background-color: $button-color;
     color: white;
@@ -177,7 +182,7 @@
     cursor: pointer;
     transition: $transition-standard;
     font-weight: 500;
-    
+
     &:hover {
       background-color: $text-hover;
     }
@@ -188,7 +193,7 @@
   margin-top: 2rem;
   padding-top: 1.5rem;
   border-top: 1px solid #eaeaea;
-  
+
   h3 {
     font-size: 1.4rem;
     margin-bottom: 1rem;
@@ -210,7 +215,7 @@
   background-color: rgba(20, 54, 66, 0.05);
   border-radius: $border-radius-sm;
   margin-top: 1rem;
-  
+
   p {
     margin-bottom: 1.5rem;
     color: $text-color;
@@ -230,7 +235,7 @@
   transition: $transition-standard;
   font-weight: 500;
   margin-left: 1rem;
-  
+
   &:hover {
     background-color: #218838;
   }

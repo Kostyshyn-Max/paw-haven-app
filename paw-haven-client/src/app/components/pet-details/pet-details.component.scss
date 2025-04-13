@@ -1,0 +1,230 @@
+@import '../../../assets/styles/variables';
+
+.pet-details {
+  &__container {
+    background: linear-gradient(135deg, $background2-color 0%, lighten($background-color, 10%) 100%);
+    padding: 2rem 0;
+  }
+
+  &__card {
+    max-width: 850px;
+    margin: auto;
+    padding: 1.5rem;
+    background-color: #fff;
+    border-radius: $border-radius-md;
+    box-shadow: $box-shadow-md;
+  }
+
+  &__arrow-button {
+    background-color: $button-color;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 100%;
+    outline: none;
+    cursor: pointer;
+    transition: $transition-standard;
+
+    &:hover {
+      background-color: $text-hover;
+    }
+  }
+
+  &__carousel-container {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  &__photo-wrapper {
+    border-radius: $border-radius-md;
+    position: relative;
+
+    img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      aspect-ratio: 1.5 / 1;
+      border-radius: $border-radius-md;
+      width: 22rem;
+      transition: opacity 0.5s ease-in-out;
+    }
+
+    .active {
+      opacity: 1;
+    }
+  }
+
+  &__card-hero {
+    width: 100%;
+    padding: 0rem 1rem;
+
+    .hero__head {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #eaeaea;
+    }
+  }
+
+  &__name-block {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    h1 {
+      margin: 0;
+      color: $text-color;
+      font-size: 2.6rem;
+    }
+    h2 {
+      margin: 0;
+      color: $text-hover;
+      opacity: 0.8;
+      font-size: 2.6rem;
+      font-weight: 300;
+    }
+  }
+
+  &__general {
+    border-bottom: 1px solid #eaeaea;
+
+    &:last-child {
+      padding-bottom: 1rem;
+    }
+  }
+
+  &__body {
+    border-bottom: 1px solid #eaeaea;
+    padding-bottom: 1rem;
+  }
+
+  &__posted-by {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+
+    .info {
+      padding: 0.3rem 1rem;
+      border-radius: $border-radius-sm;
+
+      border: 1px solid $text-hover;
+      width: fit-content;
+
+      p {
+        margin: 0;
+        font-size: 0.9rem;
+        font-weight: 300;
+        color: $text-hover;
+      }
+    }
+  }
+
+  &__footer {
+    margin-top: 1rem;
+    border-bottom: 1px solid #eaeaea;
+    padding-bottom: 1rem;
+
+    .footer__head {
+      margin: 0;
+      color: $text-color;
+    }
+  }
+
+  &__views {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.25rem;
+
+    svg {
+      color: red;
+    }
+
+    p {
+      margin: 0;
+      line-height: 12px;
+    }
+  }
+
+  &__section-title {
+    margin: 0;
+    color: $text-color;
+  }
+
+  &__info-item {
+    margin-top: 1rem;
+    label {
+      display: block;
+      font-size: 0.9rem;
+      color: $text-color;
+      opacity: 0.7;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    a, p {
+      font-size: 1.1rem;
+      margin: 0;
+      color: $text-color;
+      text-align: justify;
+      line-height: 1.25rem;
+    }
+  }
+
+  &__buttons {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__buttons-container {
+    display: flex;
+    gap: 3rem;
+    margin-top: 1rem;
+  }
+
+  &__action-button {
+    padding: 1rem;
+    background: $button-color;
+    color: #fff;
+    border: none;
+    border-radius: 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 10px rgba($button-color, 0.2);
+    width: 12rem;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      background: darken($button-color, 5%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba($button-color, 0.25);
+    }
+
+    &:active {
+      transform: translateY(0);
+      box-shadow: 0 4px 8px rgba($button-color, 0.2);
+    }
+
+    &:disabled {
+      background: lighten($button-color, 20%);
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+  }
+
+  &__card-header {
+    display: flex;
+  }
+}
