@@ -12,6 +12,11 @@
   padding: 0;
 }
 
+html, body {
+  height: 100%;
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: 'Lato', sans-serif;
   background-color: #f5f5f5;
@@ -19,14 +24,18 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
 }
 
 /* Ensure the main content area grows to push the footer down */
-main, .main-content {
+main, .main-content, router-outlet + * {
   flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Ensure the footer stays at the bottom */
 app-footer {
   flex-shrink: 0;
+  position: relative;
 }

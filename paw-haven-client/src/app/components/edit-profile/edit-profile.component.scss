@@ -1,12 +1,31 @@
 @import '../../../assets/styles/variables';
 
+.edit-profile {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, $background2-color 0%, $background-color 100%);
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .edit-profile-container {
   max-width: 800px;
   margin: 2rem auto;
-  padding: 1.5rem;
-  background-color: #fff;
-  border-radius: $border-radius-md;
-  box-shadow: $box-shadow-md;
+  padding: 2rem;
+  border-radius: $border-radius-lg;
+  box-shadow: 0 15px 45px rgba($primary-color, 0.15);
+  border: 3px solid rgba($primary-color, 0.15);
+  position: relative;
+  overflow: hidden;
+  animation: cardAppear 0.8s ease forwards;
+  background-color: white;
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+    margin: 1.5rem 1rem;
+  }
 }
 
 .loading-state, .error-message, .success-message {
@@ -17,91 +36,161 @@
 .error-message {
   color: #e74c3c;
   font-weight: 500;
+  background-color: rgba(#e74c3c, 0.1);
+  border-radius: $border-radius-md;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 5px 15px rgba(#e74c3c, 0.15);
 }
 
 .success-message {
   color: #27ae60;
   font-weight: 500;
   background-color: rgba(39, 174, 96, 0.1);
-  border-radius: $border-radius-sm;
+  border-radius: $border-radius-md;
   margin-bottom: 1.5rem;
-  padding: 1rem;
+  padding: 1.5rem;
+  border-left: 4px solid #27ae60;
+  animation: fadeInUp 0.5s ease forwards;
 }
 
 .edit-profile-content {
   h2 {
-    font-size: 1.8rem;
-    margin-bottom: 1.5rem;
-    color: $text-color;
-    font-weight: bold;
+    font-size: 2.2rem;
+    margin-bottom: 2rem;
+    color: $primary-color;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    position: relative;
+    display: inline-block;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0.2rem;
+      left: 0;
+      width: 100%;
+      height: 0.3rem;
+      background-color: $background-color;
+      border-radius: 1rem;
+      z-index: -1;
+      opacity: 0.4;
+    }
+    
+    @media (max-width: 768px) {
+      font-size: 1.8rem;
+    }
   }
 }
 
 .edit-profile-form {
   .form-section {
-    margin-bottom: 2rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid #eaeaea;
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 2px solid rgba($primary-color, 0.08);
+    transition: all 0.3s ease;
     
     &:last-child {
       border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+    
+    &:hover {
+      transform: translateY(-3px);
     }
     
     h3 {
-      font-size: 1.4rem;
-      margin-bottom: 1rem;
-      color: $text-color;
+      font-size: 1.6rem;
+      margin-bottom: 1.5rem;
+      color: $primary-color;
       font-weight: 600;
+      position: relative;
+      display: inline-block;
+      
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -0.5rem;
+        left: 0;
+        width: 3rem;
+        height: 0.3rem;
+        background-color: $background-color;
+        border-radius: 1rem;
+      }
+      
+      @media (max-width: 576px) {
+        font-size: 1.4rem;
+        
+        &::after {
+          width: 2.5rem;
+          height: 0.25rem;
+        }
+      }
     }
   }
   
   .form-group {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.8rem;
     
     label {
       display: block;
-      font-size: 0.9rem;
-      color: $text-color;
-      margin-bottom: 0.5rem;
-      font-weight: 500;
+      font-size: 1rem;
+      color: $primary-color;
+      margin-bottom: 0.8rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
     }
     
     .form-control {
       width: 100%;
-      padding: 0.75rem;
-      border: 1px solid $background5-color;
-      border-radius: $border-radius-sm;
-      font-size: 1rem;
-      transition: $transition-standard;
+      padding: 1rem;
+      border: 1.5px solid rgba($primary-color, 0.15);
+      border-radius: $border-radius-md;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      background-color: rgba($background4-color, 0.1);
       
       &:focus {
         outline: none;
-        border-color: $primary-color;
-        box-shadow: 0 0 0 3px rgba(20, 54, 66, 0.1);
+        border-color: $background-color;
+        background-color: #fff;
+        box-shadow: 0 0 0 4px rgba($background-color, 0.15);
+        transform: translateY(-2px);
       }
       
       &.is-invalid {
         border-color: #e74c3c;
+        background-color: rgba(#e74c3c, 0.05);
+      }
+
+      &::placeholder {
+        color: rgba($text-color, 0.4);
       }
     }
     
     textarea.form-control {
       resize: vertical;
-      min-height: 100px;
+      min-height: 120px;
     }
     
     .validation-error {
       color: #e74c3c;
-      font-size: 0.8rem;
-      margin-top: 0.5rem;
+      font-size: 0.9rem;
+      margin-top: 0.8rem;
+      font-weight: 500;
+      padding: 0.5rem 0.8rem;
+      background-color: rgba(#e74c3c, 0.08);
+      border-radius: $border-radius-sm;
+      animation: fadeIn 0.3s ease;
     }
     
     .form-text {
       display: block;
-      font-size: 0.8rem;
-      color: $text-color;
-      opacity: 0.7;
-      margin-top: 0.5rem;
+      font-size: 0.9rem;
+      color: $text-hover;
+      margin-top: 0.8rem;
+      font-style: italic;
     }
   }
 }
@@ -109,30 +198,72 @@
 .form-actions {
   display: flex;
   justify-content: flex-end;
-  gap: 1rem;
-  margin-top: 2rem;
+  gap: 1.5rem;
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 2px solid rgba($primary-color, 0.08);
+  
+  @media (max-width: 576px) {
+    flex-direction: column;
+  }
   
   button {
-    padding: 0.75rem 1.5rem;
-    border-radius: $border-radius-sm;
-    font-size: 1rem;
+    padding: 1rem 2rem;
+    border-radius: 3rem;
+    font-size: 1.1rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: $transition-standard;
-    font-weight: 500;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+    min-width: 160px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%);
+      transition: left 0.6s ease;
+    }
+    
+    &:hover:not(:disabled)::before {
+      left: 100%;
+    }
+    
+    &:hover:not(:disabled) {
+      transform: translateY(-5px);
+    }
+    
+    &:active:not(:disabled) {
+      transform: translateY(-2px);
+    }
     
     &:disabled {
       opacity: 0.7;
       cursor: not-allowed;
     }
+    
+    @media (max-width: 576px) {
+      width: 100%;
+      padding: 0.9rem;
+    }
   }
   
   .cancel-button {
-    background-color: $background4-color;
+    background-color: rgba($background4-color, 0.9);
     color: $text-color;
-    border: 1px solid $background5-color;
+    border: none;
+    box-shadow: 0 4px 15px rgba($primary-color, 0.1);
     
     &:hover:not(:disabled) {
-      background-color: $background5-color;
+      background-color: rgba($background4-color, 1);
+      box-shadow: 0 8px 20px rgba($primary-color, 0.15);
     }
   }
   
@@ -140,28 +271,58 @@
     background-color: $button-color;
     color: white;
     border: none;
+    box-shadow: 0 4px 15px rgba($button-color, 0.25);
     
     &:hover:not(:disabled) {
       background-color: $text-hover;
+      box-shadow: 0 8px 20px rgba($button-color, 0.3);
     }
   }
 }
 
-
-
 .spinner-container {
   display: flex;
   justify-content: center;
-  margin-bottom: 1.5rem;
+  margin: 2rem 0;
 }
 
 .spinner {
-  width: 50px;
-  height: 50px;
-  border: 4px solid rgba(20, 54, 66, 0.1);
-  border-radius: 50%;
-  border-top-color: $button-color;
-  animation: spin 1s ease-in-out infinite;
+  width: 60px;
+  height: 60px;
+  position: relative;
+  
+  &::before, &::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+  }
+  
+  &::before {
+    width: 100%;
+    height: 100%;
+    border: 4px solid rgba($background-color, 0.2);
+    border-top-color: $background-color;
+    animation: spin 1s ease-in-out infinite;
+  }
+  
+  &::after {
+    width: 50%;
+    height: 50%;
+    background-color: rgba($background-color, 0.4);
+    top: 25%;
+    left: 25%;
+    animation: pulse 1s alternate infinite ease-in-out;
+  }
+}
+
+.loading-state {
+  p {
+    color: $text-color;
+    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+    animation: pulse 2s infinite;
+  }
 }
 
 @keyframes spin {
@@ -169,8 +330,40 @@
   100% { transform: rotate(360deg); }
 }
 
-.loading-state p {
-  color: $text-color;
-  font-size: 1.1rem;
-  opacity: 0.8;
+@keyframes pulse {
+  0% { 
+    opacity: 0.6;
+    transform: scale(0.98);
+  }
+  100% { 
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes cardAppear {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

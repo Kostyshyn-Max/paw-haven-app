@@ -83,11 +83,9 @@ export class HeaderComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   closeAccountMenu(): void {
-        // Scroll to top before navigation
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 
     this.isAccountMenuOpen = false;
-
   }
 
   ngAfterViewInit() {
@@ -223,6 +221,11 @@ export class HeaderComponent implements AfterViewInit, OnInit, OnDestroy {
         document.body.classList.remove('menu-open');
         stateChanged = true;
       }
+
+      if (this.isMessagePanelOpen) {
+        this.isMessagePanelOpen = false;
+        stateChanged = true;
+      }
     }
   }
 
@@ -232,6 +235,7 @@ export class HeaderComponent implements AfterViewInit, OnInit, OnDestroy {
     if (this.isMobileMenuOpen) {
       this.isSearchOpen = false;
       this.isAccountMenuOpen = false;
+      this.isMessagePanelOpen = false;
       document.body.classList.add('menu-open');
 
       setTimeout(() => {
@@ -268,6 +272,9 @@ export class HeaderComponent implements AfterViewInit, OnInit, OnDestroy {
         this.isMobileMenuOpen = false;
         document.body.classList.remove('menu-open');
       }
+      if (this.isMessagePanelOpen) {
+        this.isMessagePanelOpen = false;
+      }
     }
   }
 
@@ -300,6 +307,10 @@ export class HeaderComponent implements AfterViewInit, OnInit, OnDestroy {
     this.isSearchOpen = false;
   }
 
+  onMessagesPanelClose(): void {
+    this.isMessagePanelOpen = false;
+  }
+
   onNavItemMouseEnter(navItem: string): void {
     if (this.hoveredNavItem !== navItem) {
       this.hoveredNavItem = navItem;
@@ -316,9 +327,6 @@ export class HeaderComponent implements AfterViewInit, OnInit, OnDestroy {
         this.updateIndicator();
       });
     }
-  }
-  onMessagesPanelClose(): void {
-    this.isMessagePanelOpen = false;
   }
 
   setActiveNavItem(navItem: string): void {

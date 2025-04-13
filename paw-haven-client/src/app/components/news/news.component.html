@@ -1,0 +1,95 @@
+<section class="news-container">
+  <div class="news-content">
+    <div class="news-header">
+      <h1 class="news-title">Новини та статті</h1>
+      <p class="news-subtitle">Цікаві історії та корисна інформація про домашніх улюбленців</p>
+    </div>
+
+    <!-- Loading state -->
+    <div *ngIf="isLoading" class="news-loading">
+      <app-paw-loader 
+        message="Завантаження новин..." 
+        size="medium">
+      </app-paw-loader>
+    </div>
+
+    <!-- Error message -->
+    <div *ngIf="errorMessage && !isLoading" class="news-error">
+      <p>{{ errorMessage }}</p>
+    </div>
+
+    <!-- Featured news -->
+    <div *ngIf="!isLoading && !errorMessage && featuredNews" class="featured-news">
+      <div class="featured-news-image-container">
+        <img 
+          [src]="featuredNews.imageUrl" 
+          [alt]="featuredNews.title"
+          onerror="this.src='assets/images/defaults/dog-default.svg'"
+          class="featured-news-image"
+        />
+        <div class="featured-news-category">{{ featuredNews.category }}</div>
+      </div>
+      <div class="featured-news-content">
+        <h2 class="featured-news-title">{{ featuredNews.title }}</h2>
+        <p class="featured-news-date">{{ formatDate(featuredNews.date) }}</p>
+        <p class="featured-news-summary">{{ featuredNews.summary }}</p>
+        <a [routerLink]="['/news', featuredNews.id]" class="read-more-button">
+          Читати далі
+          <svg width="16" height="16" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Category filter -->
+    <div *ngIf="!isLoading && !errorMessage" class="category-filter">
+      <button 
+        *ngFor="let category of categories" 
+        class="category-button" 
+        [class.active]="selectedCategory === category"
+        (click)="onCategoryChange(category)">
+        {{ category }}
+      </button>
+    </div>
+
+    <!-- News grid -->
+    <div *ngIf="!isLoading && !errorMessage && filteredNews.length > 0" class="news-grid">
+      <div *ngFor="let newsItem of filteredNews" class="news-card">
+        <div class="news-card-image-container">
+          <img 
+            [src]="newsItem.imageUrl" 
+            [alt]="newsItem.title"
+            onerror="this.src='assets/images/defaults/cat-default.svg'"
+            class="news-card-image"
+          />
+          <div class="news-card-category">{{ newsItem.category }}</div>
+        </div>
+        <div class="news-card-content">
+          <h3 class="news-card-title">{{ newsItem.title }}</h3>
+          <p class="news-card-date">{{ formatDate(newsItem.date) }}</p>
+          <p class="news-card-summary">{{ newsItem.summary }}</p>
+          <div class="news-card-footer">
+            <p class="news-card-author">{{ newsItem.author }}</p>
+            <a [routerLink]="['/news', newsItem.id]" class="news-card-read-more">
+              Читати далі
+              <svg width="12" height="12" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- No results message -->
+    <div *ngIf="!isLoading && !errorMessage && filteredNews.length === 0" class="no-results">
+      <svg width="64" height="64" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2s10 4.477 10 10z"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <h3>Немає результатів</h3>
+      <p>Спробуйте вибрати іншу категорію</p>
+    </div>
+  </div>
+</section>
