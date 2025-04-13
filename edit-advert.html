@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Редагувати оголошення</title>
+  <link rel="stylesheet" href="edit-advert-styles.css">
+</head>
+<body>
+<h1 class="page-title">Редагувати оголошення:</h1>
+<div class="form-container">
+  <form>
+    <div class="form-row">
+      <div class="form-column">
+        <label>Ім'я тварини</label>
+        <div class="input-group">
+          <input type="text" value="Пушок" readonly>
+          <div class="icon-wrapper">
+            <svg class="edit-icon" width="20" height="20" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12.5002 5H9.00024C7.60011 5 6.89953 5 6.36475 5.27248C5.89434 5.51217 5.51217 5.89434 5.27248 6.36475C5 6.89953 5 7.60011 5 9.00024V21.0002C5 22.4004 5 23.1001 5.27248 23.6349C5.51217 24.1053 5.89434 24.4881 6.36475 24.7278C6.899 25 7.59874 25 8.99614 25H21.0039C22.4013 25 23.1 25 23.6342 24.7278C24.1046 24.4881 24.4881 24.1049 24.7278 23.6345C25 23.1002 25 22.4013 25 21.0039V17.5M20 6.25L12.5 13.75V17.5H16.25L23.75 10M20 6.25L23.75 2.5L27.5 6.25L23.75 10M20 6.25L23.75 10" stroke="#143642" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-column">
+        <label>Вид</label>
+        <div class="select-wrapper">
+          <select>
+            <option selected>Кішка</option>
+            <option>Собака</option>
+            <option>Птах</option>
+            <option>Гризун</option>
+            <option>Рептилія</option>
+            <option>Амфібія</option>
+            <option>Фермерська тварина(коза, ...)</option>
+            <option>Екзотична тварина</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Фото тварини:</label>
+      <div class="photo-upload">
+        <div class="plus-sign">+</div>
+        <div>Додайте фото</div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-column">
+        <label>Вік (місяці)</label>
+        <div class="input-group">
+          <input type="text" value="6 місяців" readonly>
+          <div class="icon-wrapper">
+            <svg class="edit-icon" width="20" height="20" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12.5002 5H9.00024C7.60011 5 6.89953 5 6.36475 5.27248C5.89434 5.51217 5.51217 5.89434 5.27248 6.36475C5 6.89953 5 7.60011 5 9.00024V21.0002C5 22.4004 5 23.1001 5.27248 23.6349C5.51217 24.1053 5.89434 24.4881 6.36475 24.7278C6.899 25 7.59874 25 8.99614 25H21.0039C22.4013 25 23.1 25 23.6342 24.7278C24.1046 24.4881 24.4881 24.1049 24.7278 23.6345C25 23.1002 25 22.4013 25 21.0039V17.5M20 6.25L12.5 13.75V17.5H16.25L23.75 10M20 6.25L23.75 2.5L27.5 6.25L23.75 10M20 6.25L23.75 10" stroke="#143642" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-column">
+        <label>Стать</label>
+        <div class="select-wrapper">
+          <select>
+            <option selected>Самка</option>
+            <option>Самець</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Стан здоров'я</label>
+      <div class="select-wrapper">
+        <select>
+          <option selected>Здорова</option>
+          <option>Реабілітована</option>
+          <option>Потребує ліквуання</option>
+          <option>Відновлюється</option>
+          <option>Критичний</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="label-with-icon">
+        <label>Опис медичної історії:</label>
+        <svg class="edit-icon" width="20" height="20" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12.5002 5H9.00024C7.60011 5 6.89953 5 6.36475 5.27248C5.89434 5.51217 5.51217 5.89434 5.27248 6.36475C5 6.89953 5 7.60011 5 9.00024V21.0002C5 22.4004 5 23.1001 5.27248 23.6349C5.51217 24.1053 5.89434 24.4881 6.36475 24.7278C6.899 25 7.59874 25 8.99614 25H21.0039C22.4013 25 23.1 25 23.6342 24.7278C24.1046 24.4881 24.4881 24.1049 24.7278 23.6345C25 23.1002 25 22.4013 25 21.0039V17.5M20 6.25L12.5 13.75V17.5H16.25L23.75 10M20 6.25L23.75 2.5L27.5 6.25L23.75 10M20 6.25L23.75 10" stroke="#143642" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="textarea-container">
+        <textarea readonly>Тварина вакцинувалась 2 роки тому.</textarea>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="label-with-icon">
+        <label>Опис:</label>
+        <svg class="edit-icon" width="20" height="20" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12.5002 5H9.00024C7.60011 5 6.89953 5 6.36475 5.27248C5.89434 5.51217 5.51217 5.89434 5.27248 6.36475C5 6.89953 5 7.60011 5 9.00024V21.0002C5 22.4004 5 23.1001 5.27248 23.6349C5.51217 24.1053 5.89434 24.4881 6.36475 24.7278C6.899 25 7.59874 25 8.99614 25H21.0039C22.4013 25 23.1 25 23.6342 24.7278C24.1046 24.4881 24.4881 24.1049 24.7278 23.6345C25 23.1002 25 22.4013 25 21.0039V17.5M20 6.25L12.5 13.75V17.5H16.25L23.75 10M20 6.25L23.75 2.5L27.5 6.25L23.75 10M20 6.25L23.75 10" stroke="#143642" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="textarea-container">
+        <textarea readonly placeholder="Розкажіть про характер, звички та особливі потреби тварини..."></textarea>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="label-with-icon">
+        <label>Локація:</label>
+        <svg class="edit-icon" width="20" height="20" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12.5002 5H9.00024C7.60011 5 6.89953 5 6.36475 5.27248C5.89434 5.51217 5.51217 5.89434 5.27248 6.36475C5 6.89953 5 7.60011 5 9.00024V21.0002C5 22.4004 5 23.1001 5.27248 23.6349C5.51217 24.1053 5.89434 24.4881 6.36475 24.7278C6.899 25 7.59874 25 8.99614 25H21.0039C22.4013 25 23.1 25 23.6342 24.7278C24.1046 24.4881 24.4881 24.1049 24.7278 23.6345C25 23.1002 25 22.4013 25 21.0039V17.5M20 6.25L12.5 13.75V17.5H16.25L23.75 10M20 6.25L23.75 2.5L27.5 6.25L23.75 10M20 6.25L23.75 10" stroke="#143642" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <input type="text" placeholder="Вкажіть місцезнаходження тварини" readonly>
+    </div>
+
+    <button type="button" class="submit-button">Опублікувати</button>
+  </form>
+</div>
+
+<script>
+  // Додаємо функціональність для активації полів для редагування
+  document.querySelectorAll('.edit-icon').forEach(icon => {
+    icon.addEventListener('click', function() {
+      const parent = this.closest('.form-group, .form-column');
+      const inputs = parent.querySelectorAll('input, textarea, select');
+      inputs.forEach(input => {
+        input.removeAttribute('readonly');
+        input.removeAttribute('disabled');
+        input.focus();
+      });
+    });
+  });
+</script>
+</body>
+</html>
