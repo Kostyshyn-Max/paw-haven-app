@@ -38,7 +38,7 @@
           <p>{{ userProfile.lastName }}</p>
         </div>
         <div class="info-item">
-          <label>Email:</label>
+          <label>Електронна пошта:</label>
           <p>{{ userProfile.email }}</p>
         </div>
       </div>
@@ -77,8 +77,34 @@
       <p class="missing-data-message">Інформація про організацію відсутня. Будь ласка, оновіть свій профіль.</p>
     </div>
     
+    <!-- User's Announcements Section -->
+    <div class="user-announcements" *ngIf="!loading && !error && userProfile">
+      <h3>Мої оголошення</h3>
+      
+      <div *ngIf="loadingPetCards" class="loading-state">
+        <div class="spinner-container">
+          <div class="spinner"></div>
+        </div>
+        <p>Завантаження оголошень...</p>
+      </div>
+      
+      <div *ngIf="petCardError" class="error-message">
+        <p>{{ petCardError }}</p>
+      </div>
+      
+      <div *ngIf="!loadingPetCards && !petCardError && userPetCards && userPetCards.length > 0" class="pet-cards-grid">
+        <app-card *ngFor="let pet of userPetCards" [pet]="pet" class="pet-card"></app-card>
+      </div>
+      
+      <div *ngIf="!loadingPetCards && !petCardError && (!userPetCards || userPetCards.length === 0)" class="no-announcements">
+        <p>У вас поки немає оголошень</p>
+        <button *ngIf="isCurrentUser" class="publish-button" (click)="navigateToCreatePetCard()">Опублікувати оголошення</button>
+      </div>
+    </div>
+    
     <div class="profile-actions" *ngIf="isCurrentUser">
       <button class="edit-button" (click)="navigateToEditProfile()">Редагувати Профіль</button>
+      <button class="publish-button" (click)="navigateToCreatePetCard()">Опублікувати оголошення</button>
     </div>
   </div>
 </div>
