@@ -3,6 +3,7 @@ import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, 
 import { RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../../services/auth.service';
+import { JwtService } from '../../../services/jwt.service';
 import { MessagesComponent } from "../messages/messages.component";
 import { SearchComponent } from '../search/search.component';
 
@@ -44,21 +45,24 @@ export class HeaderComponent implements AfterViewInit, OnInit, OnDestroy {
 
   constructor(
     private renderer: Renderer2,
-    private authService: AuthService
+    private authService: AuthService,
+    private jwtService: JwtService
   ) {}
 
   ngOnInit(): void {
-
     this.authSubscription = this.authService.isAuthenticated$.subscribe(
       isAuthenticated => {
-        this.isAuthenticated = isAuthenticated;
+        this.setAuthenticationState(isAuthenticated);
       }
     );
+
     this.isAuthenticated = this.authService.isAuthenticated();
+    if (this.isAuthenticated) {
+      this.userId = this.jwtService.getUserId();
+    }
   }
 
   ngOnDestroy(): void {
-
     if (this.authSubscription) {
       this.authSubscription.unsubscribe();
     }
@@ -71,6 +75,7 @@ export class HeaderComponent implements AfterViewInit, OnInit, OnDestroy {
   logout(): void {
     this.authService.logout();
     this.isAccountMenuOpen = false;
+    this.userId = null;
   }
 
   toggleAccountMenu(): void {
@@ -78,11 +83,10 @@ export class HeaderComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   closeAccountMenu(): void {
-        // Scroll to top before navigation
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Scroll to top before navigation
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 
     this.isAccountMenuOpen = false;
-
   }
 
   ngAfterViewInit() {
@@ -100,6 +104,7 @@ export class HeaderComponent implements AfterViewInit, OnInit, OnDestroy {
   onResize() {
     if (window.innerWidth > 768 && this.isMobileMenuOpen) {
       this.isMobileMenuOpen = false;
+      document.body.classList.remove('menu-open');
     }
 
     window.requestAnimationFrame(() => {
@@ -199,21 +204,28 @@ export class HeaderComponent implements AfterViewInit, OnInit, OnDestroy {
 
   @HostListener('document:keydown', ['$event'])
   onKeyDown(event: KeyboardEvent): void {
-    // Close menus on Escape key
     if (event.key === 'Escape') {
       let stateChanged = false;
 
       if (this.isSearchOpen) {
         this.isSearchOpen = false;
+        stateChanged = true;
       }
 
       if (this.isAccountMenuOpen) {
         this.isAccountMenuOpen = false;
+        stateChanged = true;
       }
 
       if (this.isMobileMenuOpen) {
         this.isMobileMenuOpen = false;
         document.body.classList.remove('menu-open');
+        stateChanged = true;
+      }
+
+      if (this.isMessagePanelOpen) {
+        this.isMessagePanelOpen = false;
+        stateChanged = true;
       }
     }
   }
@@ -224,17 +236,20 @@ export class HeaderComponent implements AfterViewInit, OnInit, OnDestroy {
     if (this.isMobileMenuOpen) {
       this.isSearchOpen = false;
       this.isAccountMenuOpen = false;
+      this.isMessagePanelOpen = false;
       document.body.classList.add('menu-open');
+
       setTimeout(() => {
         const navLinks = document.querySelectorAll('.nav-link');
         navLinks.forEach((link, index) => {
           const element = link as HTMLElement;
-          element.style.transitionDelay = `${index * 50}ms`;
+          element.style.transitionDelay = `${Math.min(index * 30, 300)}ms`;
           element.classList.add('animated');
         });
-      }, 100);
+      }, 50);
     } else {
       document.body.classList.remove('menu-open');
+
       const navLinks = document.querySelectorAll('.nav-link');
       navLinks.forEach((link) => {
         const element = link as HTMLElement;
@@ -246,18 +261,20 @@ export class HeaderComponent implements AfterViewInit, OnInit, OnDestroy {
 
   toggleSearch(event?: MouseEvent): void {
     if (event) {
-      event.stopPropagation(); // Зупиняємо поширення події, щоб запобігти закриттю одразу
+      event.stopPropagation();
     }
     this.isSearchOpen = !this.isSearchOpen;
 
     if (this.isSearchOpen) {
-      // Закриваємо інші відкриті панелі
       if (this.isAccountMenuOpen) {
         this.isAccountMenuOpen = false;
       }
       if (this.isMobileMenuOpen) {
         this.isMobileMenuOpen = false;
         document.body.classList.remove('menu-open');
+      }
+      if (this.isMessagePanelOpen) {
+        this.isMessagePanelOpen = false;
       }
     }
   }
@@ -284,7 +301,6 @@ export class HeaderComponent implements AfterViewInit, OnInit, OnDestroy {
 
   onSearchSubmit(searchText: string): void {
     console.log('Search submitted:', searchText);
-
     this.isSearchOpen = false;
   }
 
@@ -292,17 +308,26 @@ export class HeaderComponent implements AfterViewInit, OnInit, OnDestroy {
     this.isSearchOpen = false;
   }
 
+  onMessagesPanelClose(): void {
+    this.isMessagePanelOpen = false;
+  }
+
   onNavItemMouseEnter(navItem: string): void {
-    this.hoveredNavItem = navItem;
-    this.updateIndicator();
+    if (this.hoveredNavItem !== navItem) {
+      this.hoveredNavItem = navItem;
+      window.requestAnimationFrame(() => {
+        this.updateIndicator();
+      });
+    }
   }
 
   onNavItemMouseLeave(): void {
-    this.hoveredNavItem = null;
-    this.updateIndicator();
-  }
-  onMessagesPanelClose(): void {
-    this.isMessagePanelOpen = false;
+    if (this.hoveredNavItem !== null) {
+      this.hoveredNavItem = null;
+      window.requestAnimationFrame(() => {
+        this.updateIndicator();
+      });
+    }
   }
 
   setActiveNavItem(navItem: string): void {
@@ -339,9 +364,20 @@ export class HeaderComponent implements AfterViewInit, OnInit, OnDestroy {
 
       if (this.indicatorStyle.left !== newLeft || this.indicatorStyle.width !== newWidth) {
         this.indicatorStyle = {
-          left: `${element.offsetLeft}px`,
-          width: `${element.offsetWidth}px`
+          left: newLeft,
+          width: newWidth
         };
+      }
+    }
+  }
+
+  setAuthenticationState(isAuthenticated: boolean): void {
+    if (this.isAuthenticated !== isAuthenticated) {
+      this.isAuthenticated = isAuthenticated;
+      if (isAuthenticated) {
+        this.userId = this.jwtService.getUserId();
+      } else {
+        this.userId = null;
       }
     }
   }

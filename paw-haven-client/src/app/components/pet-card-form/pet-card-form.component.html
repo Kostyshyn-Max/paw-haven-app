@@ -39,6 +39,8 @@
             placeholder="Виберіть одне чи декілька зображень"
           />
         </div>
+        <div class="pet-add__error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
+        <div class="pet-add__helper-text">Оптимальний розмір фото: до 5MB. Великі фото автоматично оптимізуються.</div>
       </div>
       <div class="pet-add__images" *ngIf="imagePreviews.length > 0">
         <label class="pet-add__label">Попередній перегляд:</label>
@@ -46,7 +48,7 @@
           <div class="pet-add__preview-items" [style.transform]="'translateX(-' + currentSlideIndex * 100 / slideCount + '%)'">
             <div class="pet-add__preview-item" *ngFor="let img of imagePreviews; let i = index">
               <img [src]="img" alt="Image preview" class="pet-photo" />
-              <button (click)="removePhoto(i)" class="pet-add__photo-remove" >
+              <button (click)="removePhoto(i)" class="pet-add__photo-remove" type="button">
                 <img src="assets/icons/trash.svg" />
               </button>
             </div>

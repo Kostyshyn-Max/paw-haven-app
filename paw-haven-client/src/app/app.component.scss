@@ -16,4 +16,17 @@ body {
   font-family: 'Lato', sans-serif;
   background-color: #f5f5f5;
   color: #333;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Ensure the main content area grows to push the footer down */
+main, .main-content {
+  flex: 1 0 auto;
+}
+
+/* Ensure the footer stays at the bottom */
+app-footer {
+  flex-shrink: 0;
 }

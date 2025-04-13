@@ -204,6 +204,23 @@
     }
   }
 
+  &__error-message {
+    color: #e74c3c;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-top: 0.2rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.3rem;
+    background-color: rgba(231, 76, 60, 0.1);
+  }
+
+  &__helper-text {
+    color: #7f8c8d;
+    font-size: 0.8rem;
+    margin-top: 0.2rem;
+    padding-left: 0.5rem;
+  }
+
   &__submit {
     padding: 1rem;
     background: $button-color;

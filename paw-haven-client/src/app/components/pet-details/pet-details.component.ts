@@ -1,48 +1,130 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { PetCardDetails } from '../../models/pet-card.model';
+import { CommonModule, Location } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { PetCardDetails, PetCard } from '../../models/pet-card.model';
 import { PetCardService } from '../../services/pet-card.service';
+import { UserFavouritesService } from '../../services/user-favourites.service';
+import { AuthService } from '../../services/auth.service';
+import { PawLoaderComponent } from '../shared/paw-loader/paw-loader.component';
+import { CardComponent } from '../shared/card/card.component';
 
 @Component({
   selector: 'app-pet-details',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, PawLoaderComponent, CardComponent],
   templateUrl: './pet-details.component.html',
   styleUrl: './pet-details.component.scss'
 })
-export class PetDetailsComponent {
+export class PetDetailsComponent implements OnInit {
   petDetails: PetCardDetails | null = null;
   isLoading: boolean = false;
   selectedPhotoIndex: number = 0;
+  isFavorite: boolean = false;
+  isAuthenticated: boolean = false;
 
-  constructor (
+  constructor(
     private route: ActivatedRoute,
-    private petCardService: PetCardService
+    private router: Router,
+    private petCardService: PetCardService,
+    private userFavouritesService: UserFavouritesService,
+    private authService: AuthService,
+    private location: Location
   ) {}
 
   ngOnInit(): void {
     this.isLoading = true;
+    this.checkAuthentication();
 
     this.route.params.subscribe(params => {
       const petId = params["id"];
 
       if (petId) {
-        this.petCardService.getPetCardDetailsById(petId).subscribe({
-          next: (petDetails) => {
-            this.petDetails = petDetails;
-            this.isLoading = false;
-          },
-          error: (error) => {
-            console.error(error);
-            this.isLoading = false;
-          },
-          complete: () => {
-            this.isLoading = false;
-          }
-        })
+        this.loadPetDetails(petId);
       }
-    })
+    });
+  }
+
+  checkAuthentication(): void {
+    this.isAuthenticated = this.authService.isAuthenticated();
+  }
+
+  loadPetDetails(petId: number): void {
+    this.petCardService.getPetCardDetailsById(petId).subscribe({
+      next: (petDetails) => {
+        this.petDetails = petDetails;
+        this.isLoading = false;
+        
+        if (this.isAuthenticated) {
+          this.checkIfFavorite(petId);
+        }
+      },
+      error: (error) => {
+        console.error(error);
+        this.isLoading = false;
+      }
+    });
+  }
+
+  checkIfFavorite(petId: number): void {
+    this.userFavouritesService.isUserSavedACard(petId).subscribe({
+      next: (isSaved) => {
+        this.isFavorite = isSaved;
+      },
+      error: (error) => {
+        console.error('Error checking favorite status:', error);
+      }
+    });
+  }
+
+  toggleFavorite(): void {
+    if (!this.isAuthenticated) {
+      this.router.navigate(['/login'], { 
+        queryParams: { returnUrl: this.router.url }
+      });
+      return;
+    }
+
+    if (!this.petDetails) return;
+    
+    if (this.isFavorite) {
+      this.userFavouritesService.removeFavourite(this.petDetails.id).subscribe({
+        next: () => {
+          this.isFavorite = false;
+        },
+        error: (error) => {
+          console.error('Error removing from favorites:', error);
+        }
+      });
+    } else {
+      this.userFavouritesService.addFavourite(this.petDetails.id).subscribe({
+        next: () => {
+          this.isFavorite = true;
+        },
+        error: (error) => {
+          console.error('Error adding to favorites:', error);
+        }
+      });
+    }
+  }
+
+  reloadPage(): void {
+    window.location.reload();
+  }
+
+  // Метод для вибору конкретного зображення з мініатюр
+  selectImage(index: number): void {
+    if (!this.petDetails || !this.petDetails.photos || index < 0 || index >= this.petDetails.photos.length) return;
+    this.selectedPhotoIndex = index;
+  }
+
+  nextImage(): void {
+    if (!this.petDetails || !this.petDetails.photos || !this.petDetails.photos.length) return;
+    this.selectedPhotoIndex = (this.selectedPhotoIndex + 1) % this.petDetails.photos.length;
+  }
+
+  prevImage(): void {
+    if (!this.petDetails || !this.petDetails.photos || !this.petDetails.photos.length) return;
+    this.selectedPhotoIndex = (this.selectedPhotoIndex - 1 + this.petDetails.photos.length) % this.petDetails.photos.length;
   }
 
   getAgeText(months: number): string {
@@ -80,11 +162,21 @@ export class PetDetailsComponent {
     }
   }
 
-  nextImage(): void {
-    this.selectedPhotoIndex = (this.selectedPhotoIndex - 1 + this.petDetails!.photos.length) % this.petDetails!.photos.length;
+  goBack(): void {
+    this.location.back();
   }
-
-  prevImage(): void {
-    this.selectedPhotoIndex = (this.selectedPhotoIndex + 1) % this.petDetails!.photos.length;
+  
+  // Convert PetCardDetails to PetCard for the card component
+  convertToPetCard(details: PetCardDetails): PetCard {
+    return {
+      id: details.id,
+      name: details.name,
+      age: details.age,
+      location: details.location,
+      petPhoto: details.photos && details.photos.length > 0 
+        ? { petPhotoLink: details.photos[0].petPhotoLink } 
+        : { petPhotoLink: 'assets/images/placeholder-pet.jpg' },
+      petType: details.petType
+    };
   }
 }

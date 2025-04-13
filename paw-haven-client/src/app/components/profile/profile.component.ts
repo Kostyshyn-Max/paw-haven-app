@@ -9,11 +9,14 @@ import { PetCardService } from '../../services/pet-card.service';
 import { UserFavouritesService } from '../../services/user-favourites.service';
 import { UserProfileModel, UserService } from '../../services/user.service';
 import { CardComponent } from '../shared/card/card.component';
+import { OrganisationService } from '../../services/organisation.service';
+import { Organization } from '../../models/organization.model';
+import { PawLoaderComponent } from '../shared/paw-loader/paw-loader.component';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, CardComponent],
+  imports: [CommonModule, CardComponent, PawLoaderComponent],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss'
 })
@@ -22,6 +25,8 @@ export class ProfileComponent implements OnInit {
   loading: boolean = true;
   error: string | null = null;
   isCurrentUser: boolean = false;
+  isOrganisationView: boolean = false;
+  organisationId: string | null = null;
 
   // Pet Cards related properties
   userPetCards: PetCard[] = [];
@@ -40,55 +45,84 @@ export class ProfileComponent implements OnInit {
     private authService: AuthService,
     private jwtService: JwtService,
     private petCardService: PetCardService,
-    private userFavouritesService: UserFavouritesService
+    private userFavouritesService: UserFavouritesService,
+    private organisationService: OrganisationService
   ) {}
 
   ngOnInit(): void {
+    // Check if this is organization view or profile view
+    this.isOrganisationView = this.router.url.includes('/organisations/');
+
     this.route.paramMap.pipe(
       switchMap(params => {
-        const userId = params.get('id');
+        const id = params.get('id'); // This can be userId or organisationId
 
-        if (userId) {
-          // Check if the viewed profile is the current user's profile
-          this.isCurrentUser = this.jwtService.isCurrentUserProfile(userId);
-          return this.userService.getUserProfile(userId).pipe(
-            catchError(err => {
-              console.error('Error loading profile by ID:', err);
+        if (!id) {
+          this.error = 'Ідентифікатор не надано';
+          this.loading = false;
+          return of(null);
+        }
 
-              if (err.status === 404) {
-                this.error = 'User profile not found.';
-              } else {
-                this.error = 'Error loading profile. Please try again later.';
+        // If this is an organization view, we need to get the user profile of the organization owner
+        if (this.isOrganisationView) {
+          this.organisationId = id;
+          return this.organisationService.getOrganisationById(id).pipe(
+            switchMap(organisation => {
+              if (!organisation || !organisation.ownerId) {
+                this.error = 'Організація не знайдена або не має власника';
+                this.loading = false;
+                return of(null);
               }
+              
+              // Check if the current user is the owner of this organization
+              const isLoggedIn = this.authService.isAuthenticated();
+              const ownerId = organisation.ownerId;
+              this.isCurrentUser = isLoggedIn && this.jwtService.isCurrentUserProfile(ownerId);
 
-              this.loading = false;
-              return of(null);
-            })
-          );
-        } else {
-          // No ID in URL means we're viewing our own profile
-          const currentUserId = this.jwtService.getUserId();
-
-          if (!currentUserId) {
-            this.isCurrentUser = false;
-            this.loading = false;
-            this.error = 'Unable to retrieve user information.';
-            return of(null);
-          }
-
-          this.isCurrentUser = true;
-          console.log('Loading current user profile with ID:', currentUserId);
-
-          return this.userService.getUserProfile(currentUserId).pipe(
+              // If current user is the owner, redirect to profile page
+              if (this.isCurrentUser) {
+                this.router.navigate(['/profile', ownerId]);
+                return of(null);
+              }
+              
+              // Now get the user profile of the organization owner
+              return this.userService.getUserProfile(ownerId).pipe(
+                catchError(err => {
+                  console.error('Помилка при завантаженні профілю власника організації:', err);
+                  this.error = 'Помилка при завантаженні профілю власника організації';
+                  this.loading = false;
+                  return of(null);
+                })
+              );
+            }),
             catchError(err => {
-              console.error('Error loading current user profile:', err);
-
-              this.error = 'Error loading your profile. Please try again later.';
+              console.error('Помилка при завантаженні організації:', err);
+              this.error = 'Помилка при завантаженні організації';
               this.loading = false;
               return of(null);
             })
           );
         }
+        
+        // If not organization view, proceed with normal profile view
+        // Check if the viewed profile is the current user's profile
+        const isLoggedIn = this.authService.isAuthenticated();
+        this.isCurrentUser = isLoggedIn && this.jwtService.isCurrentUserProfile(id);
+        
+        return this.userService.getUserProfile(id).pipe(
+          catchError(err => {
+            console.error('Помилка при завантаженні профілю:', err);
+
+            if (err.status === 404) {
+              this.error = 'Профіль користувача не знайдено';
+            } else {
+              this.error = 'Помилка при завантаженні профілю. Спробуйте пізніше.';
+            }
+
+            this.loading = false;
+            return of(null);
+          })
+        );
       })
     ).subscribe({
       next: (profile) => {
@@ -96,13 +130,17 @@ export class ProfileComponent implements OnInit {
           this.userProfile = profile;
           // After profile loaded successfully, load user's pet cards
           this.loadUserPetCards();
-          this.loadUserFavouritePetCards();
+          
+          // Only load favorites if this is the current user's profile
+          if (this.isCurrentUser) {
+            this.loadUserFavouritePetCards();
+          }
         }
         this.loading = false;
       },
       error: (err) => {
-        console.error('Unhandled error in profile component:', err);
-        this.error = 'An unexpected error occurred. Please try again later.';
+        console.error('Непередбачена помилка в компоненті профілю:', err);
+        this.error = 'Сталася непередбачена помилка. Спробуйте пізніше.';
         this.loading = false;
       }
     });
@@ -152,6 +190,12 @@ export class ProfileComponent implements OnInit {
 
   loadUserFavouritePetCards(): void {
     if (!this.userProfile) return;
+    
+    // Only load favorites if this is the current user
+    if (!this.isCurrentUser) {
+      this.isLoadingFavouritePetCards = false;
+      return;
+    }
 
     this.isLoadingFavouritePetCards = true;
     this.favouritePetCardsError = null;

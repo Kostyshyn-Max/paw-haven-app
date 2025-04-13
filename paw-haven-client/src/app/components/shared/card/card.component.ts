@@ -64,23 +64,36 @@ export class CardComponent implements OnInit {
     }
   }
 
+  scrollToTop(): void {
+
+    window.scrollTo({
+      behavior: 'smooth',
+      top: 0
+    });
+  }
   getPetImageUrl(): string {
+    console.log('Pet data:', this.pet);
+    console.log('Pet photo:', this.pet.petPhoto);
+    
     if (this.pet.petPhoto && this.pet.petPhoto.petPhotoLink) {
+      console.log('Using pet photo link:', this.pet.petPhoto.petPhotoLink);
       return this.pet.petPhoto.petPhotoLink;
     }
 
     if (this.pet.petType && this.pet.petType.title) {
       const petType = this.pet.petType.title.toLowerCase();
+      console.log('Pet type:', petType);
       if (petType.includes('кіт') || petType.includes('кот') || petType.includes('кош')) {
         return 'assets/images/defaults/cat-default.svg';
       } else if (petType.includes('соб') || petType.includes('пес')) {
-        return 'assets/images/default-dog.jpg';
+        return 'assets/images/defaults/dog-default.svg';
       } else if (petType.includes('крол')) {
         return 'assets/images/default-rabbit.jpg';
       }
     }
 
-    return 'assets/images/default-pet.jpg';
+    console.log('Using default pet image');
+    return 'assets/images/defaults/cat-default.svg';
   }
 
   getPetType(): string {
@@ -127,8 +140,10 @@ export class CardComponent implements OnInit {
   }
 
   navigateToPetDetails(petName: string): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     console.log(`Navigate to pet details for: ${petName}`);
     // Логіка для переходу на сторінку з деталями
     this.router.navigate([`/pets/${this.pet.id}`]);
   }
 }
+

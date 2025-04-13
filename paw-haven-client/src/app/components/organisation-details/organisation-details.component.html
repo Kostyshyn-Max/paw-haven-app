@@ -1,0 +1,62 @@
+<div class="organisation-details-container">
+  <div class="back-button-container">
+    <button class="back-button" (click)="goBack()">
+      <i class="fa fa-arrow-left"></i>
+      <span>Назад</span>
+    </button>
+  </div>
+
+  <app-paw-loader *ngIf="isLoading"></app-paw-loader>
+  
+  <div *ngIf="error" class="error-message">
+    <i class="fa fa-exclamation-circle"></i>
+    Не вдалося завантажити інформацію про організацію. Будь ласка, спробуйте пізніше.
+  </div>
+  
+  <div *ngIf="!isLoading && !error && organization" class="organisation-details">
+    <div class="organisation-header">
+      <div class="organisation-logo-placeholder">
+        <div class="initials">{{ getInitials(organization.name) }}</div>
+        <i class="fa fa-building org-icon"></i>
+      </div>
+      <h1>{{ organization.name }}</h1>
+    </div>
+    
+    <div class="organisation-content">
+      <div class="description-section">
+        <h2>Про організацію</h2>
+        <p>{{ organization.description || 'Опис відсутній' }}</p>
+      </div>
+      
+      <div class="contact-section">
+        <h2>Контактна інформація</h2>
+        <div class="contact-info">
+          <p *ngIf="organization.location">
+            <i class="fa fa-map-marker-alt contact-icon"></i>
+            <span>{{ organization.location }}</span>
+          </p>
+          <p *ngIf="organization.contactEmail">
+            <i class="fa fa-envelope contact-icon"></i>
+            <span>{{ organization.contactEmail }}</span>
+          </p>
+          <p *ngIf="organization.contactPhone">
+            <i class="fa fa-phone contact-icon"></i>
+            <span>{{ organization.contactPhone }}</span>
+          </p>
+        </div>
+      </div>
+      
+      <div class="pets-section">
+        <h2>Наші тварини</h2>
+        
+        <div *ngIf="pets.length === 0" class="no-pets-message">
+          <p>Немає доступних тварин</p>
+        </div>
+        
+        <div *ngIf="pets.length > 0" class="pet-cards-grid">
+          <app-card *ngFor="let pet of pets" [pet]="pet" class="pet-card"></app-card>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
