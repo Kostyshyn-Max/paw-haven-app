@@ -13,6 +13,7 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { OrganisationService } from './services/organisation.service';
 import { OrganisationsComponent } from './components/organisations/organisations.component';
 import { OrganisationDetailsComponent } from './components/organisation-details/organisation-details.component';
+import { BlogDetailsComponent } from './components/blog-details/blog-details.component';
 
 export const routes: Routes = [
   { path: 'sign-in', component: SignInComponent },
@@ -28,6 +29,7 @@ export const routes: Routes = [
   { path: 'organisation', component: OrganisationsComponent },
   { path: 'organisation/:id', component: OrganisationDetailsComponent },
   { path: 'blog', component: PetsStoriesComponent },
+  { path: 'blog/:id', component: BlogDetailsComponent },
   { path: 'stories', component: PetsStoriesComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' }
 ];
