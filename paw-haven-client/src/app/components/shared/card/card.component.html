@@ -2,7 +2,7 @@
     <img class="pet-card__photo" [src]="getPetImageUrl()" [alt]="pet.name || 'Домашня тварина'" loading="lazy" />
     <div class="pet-card__info">
       <p class="pet-card__name">
-        {{ pet.name || 'Без імені' }} <span class="pet-card__type">{{ getPetType() }}</span>
+        {{ pet.name || 'Без імені' }} <span class="pet-card__type">/{{ getPetType() }}/</span>
       </p>
       <p class="pet-card__details">
         <span class="pet-card__location">{{ getPetLocation() }}</span>
