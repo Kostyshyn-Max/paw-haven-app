@@ -10,7 +10,7 @@
         <span class="pet-card__age">{{ getAgeText(pet.age || 0) }}</span>
       </p>
       <div class="pet-card__actions">
-        <button class="pet-card__button" (click)="navigateToPetDetails(pet.name)">
+        <button class="pet-card__button" (click)="navigateToPetDetails(pet.name)" (click)="scrollToTop()">
           <span>Деталі</span>
         </button>
         <button class="pet-card__favorite" aria-label="Додати до обраного" (click)="toggleFavourite()">

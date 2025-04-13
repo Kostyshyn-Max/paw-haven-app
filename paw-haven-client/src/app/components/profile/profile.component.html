@@ -1,10 +1,10 @@
 <div class="profile-section">
   <div class="profile-container">
     <div *ngIf="loading" class="loading-state">
-      <div class="spinner-container">
-        <div class="spinner"></div>
-      </div>
-      <p>Завантаження інформації про профіль...</p>
+      <app-paw-loader 
+        message="Завантаження інформації про профіль..." 
+        size="medium">
+      </app-paw-loader>
     </div>
 
     <div *ngIf="error" class="error-message">
@@ -14,7 +14,7 @@
     <div *ngIf="!loading && !error && userProfile" class="profile-content">
       <div class="profile-header">
         <div class="profile-image" *ngIf="userProfile.profileImageUrl">
-          <img [src]="userProfile.profileImageUrl" alt="Profile picture">
+          <img [src]="userProfile.profileImageUrl" alt="Фото профілю">
         </div>
         <div class="profile-image default-image" *ngIf="!userProfile.profileImageUrl">
           <span>{{ userProfile.firstName.charAt(0) }}{{ userProfile.lastName.charAt(0) }}</span>
@@ -45,7 +45,7 @@
         </div>
       </div>
 
-      <!-- Organization information section - Improved conditional check -->
+      <!-- Organization information section -->
       <div class="organisation-details" *ngIf="userProfile.isOrganisationOwner && userProfile.organisation">
         <h3>Інформація про організацію</h3>
         <div class="info-grid">
@@ -79,14 +79,14 @@
       </div>
 
       <!-- User's Announcements Section -->
-      <div class="user-announcements" *ngIf="!loading && !error && userProfile">
-        <h3>Мої оголошення</h3>
+      <div class="user-announcements">
+        <h3>Оголошення користувача</h3>
 
         <div *ngIf="loadingPetCards" class="loading-state">
-          <div class="spinner-container">
-            <div class="spinner"></div>
-          </div>
-          <p>Завантаження оголошень...</p>
+          <app-paw-loader 
+            message="Завантаження оголошень..." 
+            size="medium">
+          </app-paw-loader>
         </div>
 
         <div *ngIf="petCardError" class="error-message">
@@ -103,18 +103,19 @@
         </div>
       </div>
 
-      <div class="user-announcements" *ngIf="!loading && !error && userProfile">
+      <!-- Favorite announcements - only visible to the profile owner -->
+      <div class="user-announcements" *ngIf="!loading && !error && userProfile && isCurrentUser">
         <h3>Збереженні оголошення</h3>
 
-        <div *ngIf="loadingPetCards" class="loading-state">
-          <div class="spinner-container">
-            <div class="spinner"></div>
-          </div>
-          <p>Завантаження оголошень...</p>
+        <div *ngIf="isLoadingFavouritePetCards" class="loading-state">
+          <app-paw-loader 
+            message="Завантаження збережених оголошень..." 
+            size="medium">
+          </app-paw-loader>
         </div>
 
-        <div *ngIf="petCardError" class="error-message">
-          <p>{{ petCardError }}</p>
+        <div *ngIf="favouritePetCardsError" class="error-message">
+          <p>{{ favouritePetCardsError }}</p>
         </div>
 
         <div *ngIf="!isLoadingFavouritePetCards && !favouritePetCardsError && userFavouritePetCards && userFavouritePetCards.length > 0" class="pet-cards-grid">
@@ -126,11 +127,17 @@
         </div>
       </div>
 
+      <!-- Profile actions - only visible to the current user -->
       <div class="profile-actions" *ngIf="isCurrentUser">
-        <button class="edit-button" (click)="navigateToEditProfile()">Редагувати Профіль</button>
-        <button class="publish-button" (click)="navigateToCreatePetCard()">Опублікувати оголошення</button>
+        <button class="edit-button" (click)="navigateToEditProfile()">
+          <img src="assets/icons/edit.svg" alt="Редагувати" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'24\' height=\'24\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'white\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'><path d=\'M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2-2h14a2 2 0 0 0 2-2v-7\'/><path d=\'M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z\'/></svg>'">
+          Редагувати Профіль
+        </button>
+        <button class="publish-button" (click)="navigateToCreatePetCard()">
+          <img src="assets/icons/plus.svg" alt="Додати" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'24\' height=\'24\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'white\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'><line x1=\'12\' y1=\'5\' x2=\'12\' y2=\'19\'/><line x1=\'5\' y1=\'12\' x2=\'19\' y2=\'12\'/></svg>'">
+          Опублікувати оголошення
+        </button>
       </div>
     </div>
   </div>
-
 </div>
