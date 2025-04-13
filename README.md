@@ -7,6 +7,7 @@ PetHaven — це веб-платформа, створена для волон�
 ## 📑 Зміст
 
 - [📛 PawHaven](#-pawhaven)
+  - [🖼️ Project Overview](#project-overview)
   - [📑 Зміст](#-зміст)
   - [💡 Про проєкт](#-про-проєкт)
   - [🧩 Функціональність](#-функціональність)
@@ -27,6 +28,12 @@ PetHaven — це веб-платформа, створена для волон�
   - [👥 Автори](#-автори)
 
 ---
+
+## 🖼️ Project Overview
+
+This project includes various UI screens used throughout the application.
+
+👉 For a complete visual reference of the app screens, check out the [PREVIEW.md](PREVIEW.md) file.
 
 ## 💡 Про проєкт
 
