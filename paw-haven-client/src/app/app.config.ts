@@ -1,21 +1,18 @@
-import { ApplicationConfig } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { provideHttpClient, withInterceptors, withInterceptorsFromDi } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { CookieService } from 'ngx-cookie-service';
 
 import { routes } from './app.routes';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthInterceptor } from './interceptors/auth.interceptor';
-import { CookieService } from 'ngx-cookie-service';
-import { authInterceptor } from './interceptors/auth.interceptor.function';
+import { JwtInterceptor } from './interceptors/jwt.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
-    provideHttpClient(
-      withInterceptorsFromDi(),
-      withInterceptors([authInterceptor])
-    ),
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    provideAnimations(),
+    importProvidersFrom(HttpClientModule),
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     CookieService
   ]
 };
