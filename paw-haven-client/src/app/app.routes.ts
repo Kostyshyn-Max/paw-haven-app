@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
 import { HomeComponent } from './components/home/home.component';
 import { PetCardFormComponent } from './components/pet-card-form/pet-card-form.component';
+import { PetDetailsComponent } from './components/pet-details/pet-details.component';
 import { PetsComponent } from './components/pets/pets.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
@@ -17,5 +18,6 @@ export const routes: Routes = [
   { path: 'profile', component: ProfileComponent },
   { path: 'profile/edit/:id', component: EditProfileComponent },
   { path: 'pets/add', component: PetCardFormComponent },
+  { path: 'pets/:id', component: PetDetailsComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' }
 ];
