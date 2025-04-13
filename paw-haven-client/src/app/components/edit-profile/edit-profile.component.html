@@ -32,12 +32,12 @@
           >
           <div class="validation-error" *ngIf="profileForm.get('firstName')?.invalid && profileForm.get('firstName')?.touched">
             <span *ngIf="profileForm.get('firstName')?.errors?.['required']">Ім'я обов'язкове</span>
-            <span *ngIf="profileForm.get('firstName')?.errors?.['minlength']">Ім'я повинно містити не менше 5 символів</span>
+            <span *ngIf="profileForm.get('firstName')?.errors?.['minlength']">Ім'я повинно містити не менше 2 символів</span>
           </div>
         </div>
         
         <div class="form-group">
-          <label for="lastName">Прізвиище</label>
+          <label for="lastName">Прізвище *</label>
           <input 
             id="lastName" 
             type="text" 
@@ -47,7 +47,7 @@
           >
           <div class="validation-error" *ngIf="profileForm.get('lastName')?.invalid && profileForm.get('lastName')?.touched">
             <span *ngIf="profileForm.get('lastName')?.errors?.['required']">Прізвище обов'язкове</span>
-            <span *ngIf="profileForm.get('lastName')?.errors?.['minlength']">Прізвище повинно містити не менше 5 символів</span>
+            <span *ngIf="profileForm.get('lastName')?.errors?.['minlength']">Прізвище повинно містити не менше 2 символів</span>
           </div>
         </div>
         
@@ -66,7 +66,17 @@
           </div>
         </div>
         
-
+        <div class="form-group">
+          <label for="profileImageUrl">URL зображення профілю</label>
+          <input 
+            id="profileImageUrl" 
+            type="text" 
+            formControlName="profileImageUrl" 
+            class="form-control"
+            placeholder="https://example.com/image.jpg"
+          >
+          <small class="form-text">Додайте URL зображення для вашого профілю (необов'язково)</small>
+        </div>
       </div>
       
       <!-- Organization Information Section - Only shown for organization owners -->
@@ -83,29 +93,29 @@
             [class.is-invalid]="profileForm.get('organisationName')?.invalid && profileForm.get('organisationName')?.touched"
           >
           <div class="validation-error" *ngIf="profileForm.get('organisationName')?.invalid && profileForm.get('organisationName')?.touched">
-            <span *ngIf="profileForm.get('organisationName')?.errors?.['required']">Organisation name is required</span>
+            <span *ngIf="profileForm.get('organisationName')?.errors?.['required']">Назва організації обов'язкова</span>
           </div>
         </div>
         
         <div class="form-group">
-          <label for="organisationDescription">Опис</label>
+          <label for="organisationDescription">Опис організації</label>
           <textarea 
             id="organisationDescription" 
             formControlName="organisationDescription" 
             class="form-control"
             rows="4"
-            placeholder="Tell us about your organization and its mission..."
+            placeholder="Розкажіть про вашу організацію та її місію..."
           ></textarea>
         </div>
         
         <div class="form-group">
-          <label for="organisationLocation">Розсташуання</label>
+          <label for="organisationLocation">Розташування</label>
           <input 
             id="organisationLocation" 
             type="text" 
             formControlName="organisationLocation" 
             class="form-control"
-            placeholder="City, Country"
+            placeholder="Місто, Країна"
           >
         </div>
         
@@ -127,14 +137,16 @@
             formControlName="organisationDonationCredentials" 
             class="form-control"
             rows="3"
-            placeholder="Bank account details, PayPal, or other payment information"
+            placeholder="Реквізити банківського рахунку, PayPal або інша платіжна інформація"
           ></textarea>
           <small class="form-text">Ця інформація буде видимою для користувачів, які бажають зробити пожертву на користь вашої організації</small>
         </div>
       </div>
       
       <div class="form-actions">
-        <button type="button" class="cancel-button" (click)="cancel()">Відмінити</button>
+        <button type="button" class="cancel-button" (click)="cancel()">
+          Скасувати
+        </button>
         <button 
           type="submit" 
           class="save-button" 
