@@ -98,8 +98,31 @@
         </div>
 
         <div *ngIf="!loadingPetCards && !petCardError && (!userPetCards || userPetCards.length === 0)" class="no-announcements">
-          <p>У вас поки немає оголошень</p>
+          <p>Ви ще не публікували оголошення</p>
           <button *ngIf="isCurrentUser" class="publish-button" (click)="navigateToCreatePetCard()">Опублікувати оголошення</button>
+        </div>
+      </div>
+
+      <div class="user-announcements" *ngIf="!loading && !error && userProfile">
+        <h3>Збереженні оголошення</h3>
+
+        <div *ngIf="loadingPetCards" class="loading-state">
+          <div class="spinner-container">
+            <div class="spinner"></div>
+          </div>
+          <p>Завантаження оголошень...</p>
+        </div>
+
+        <div *ngIf="petCardError" class="error-message">
+          <p>{{ petCardError }}</p>
+        </div>
+
+        <div *ngIf="!isLoadingFavouritePetCards && !favouritePetCardsError && userFavouritePetCards && userFavouritePetCards.length > 0" class="pet-cards-grid">
+          <app-card *ngFor="let pet of userFavouritePetCards" [pet]="pet" [favouritesTrigger]="onUserFavouriteRemove" class="pet-card"></app-card>
+        </div>
+
+        <div *ngIf="!isLoadingFavouritePetCards && !favouritePetCardsError && (!userFavouritePetCards || userFavouritePetCards.length === 0)" class="no-announcements">
+          <p>У вас немає збережених оголошень</p>
         </div>
       </div>
 

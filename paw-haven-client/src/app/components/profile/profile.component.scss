@@ -1,7 +1,7 @@
 @import '../../../assets/styles/variables';
 
 .profile-section {
-  background-color: #FCF6BD;
+  background: linear-gradient(135deg, $background2-color 0%, lighten($background-color, 10%) 100%);
   padding: 2rem 0;
 }
 
