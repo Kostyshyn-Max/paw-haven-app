@@ -1,0 +1,84 @@
+<div class="profile-container">
+  <div *ngIf="loading" class="loading-state">
+    <div class="spinner-container">
+      <div class="spinner"></div>
+    </div>
+    <p>Завантаження інформації про профіль...</p>
+  </div>
+  
+  <div *ngIf="error" class="error-message">
+    <p>{{ error }}</p>
+  </div>
+  
+  <div *ngIf="!loading && !error && userProfile" class="profile-content">
+    <div class="profile-header">
+      <div class="profile-image" *ngIf="userProfile.profileImageUrl">
+        <img [src]="userProfile.profileImageUrl" alt="Profile picture">
+      </div>
+      <div class="profile-image default-image" *ngIf="!userProfile.profileImageUrl">
+        <span>{{ userProfile.firstName.charAt(0) }}{{ userProfile.lastName.charAt(0) }}</span>
+      </div>
+      
+      <div class="profile-name">
+        <h2>{{ userProfile.firstName }} {{ userProfile.lastName }}</h2>
+        <p class="email">{{ userProfile.email }}</p>
+        <p *ngIf="userProfile.isOrganisationOwner" class="badge">Власник організації</p>
+      </div>
+    </div>
+    
+    <div class="profile-details">
+      <h3>Інформація про користувача</h3>
+      <div class="info-grid">
+        <div class="info-item">
+          <label>Імʼя:</label>
+          <p>{{ userProfile.firstName }}</p>
+        </div>
+        <div class="info-item">
+          <label>Прізвиище:</label>
+          <p>{{ userProfile.lastName }}</p>
+        </div>
+        <div class="info-item">
+          <label>Email:</label>
+          <p>{{ userProfile.email }}</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Organization information section - Improved conditional check -->
+    <div class="organisation-details" *ngIf="userProfile.isOrganisationOwner && userProfile.organisation">
+      <h3>Інформація про організацію</h3>
+      <div class="info-grid">
+        <div class="info-item">
+          <label>Назва організації:</label>
+          <p>{{ userProfile.organisation.name }}</p>
+        </div>
+        <div class="info-item" *ngIf="userProfile.organisation.description">
+          <label>Опис:</label>
+          <p>{{ userProfile.organisation.description }}</p>
+        </div>
+        <div class="info-item" *ngIf="userProfile.organisation.location">
+          <label>Розсташуання:</label>
+          <p>{{ userProfile.organisation.location }}</p>
+        </div>
+        <div class="info-item" *ngIf="userProfile.organisation.phoneNumber">
+          <label>Номер телефону:</label>
+          <p>{{ userProfile.organisation.phoneNumber }}</p>
+        </div>
+        <div class="info-item" *ngIf="userProfile.organisation.donationCredentials">
+          <label>Інформація для пожертви:</label>
+          <p>{{ userProfile.organisation.donationCredentials }}</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Message when organization owner has no organization data -->
+    <div class="organisation-details missing-data" *ngIf="userProfile.isOrganisationOwner && !userProfile.organisation">
+      <h3>Інформація про організацію</h3>
+      <p class="missing-data-message">Інформація про організацію відсутня. Будь ласка, оновіть свій профіль.</p>
+    </div>
+    
+    <div class="profile-actions" *ngIf="isCurrentUser">
+      <button class="edit-button" (click)="navigateToEditProfile()">Редагувати Профіль</button>
+    </div>
+  </div>
+</div>

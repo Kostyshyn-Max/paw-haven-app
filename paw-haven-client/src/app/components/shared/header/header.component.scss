@@ -393,22 +393,48 @@
 }
 
 .user-icon-button {
-  background-color: #f0f5f7;
-  transition: all 0.3s ease;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all $transition-normal;
+  position: relative;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
   
-  &.active, &:hover {
-    background-color: rgba(20, 54, 66, 0.15);
+  svg {
+    width: 22px;
+    height: 22px;
+    transition: all $transition-normal;
+    fill: none;
+    stroke: $text-color;
+    stroke-width: 2px;
   }
   
-  &.active {
+  &:hover {
+    background-color: rgba(20, 54, 66, 0.1);
+    transform: translateY(-2px);
+    
     svg {
+      transform: scale(1.15);
       stroke: $primary-color;
     }
   }
   
-  svg {
-    stroke: #143642;
-    stroke-width: 2px;
+  &:active {
+    transform: translateY(0);
+  }
+  
+  &.active {
+    background-color: rgba(20, 54, 66, 0.15);
+    
+    svg {
+      stroke: $primary-color;
+    }
   }
 }
 
@@ -420,7 +446,7 @@
   background-color: white;
   border-radius: 12px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  z-index: 100;
+  z-index: 1000;
   overflow: hidden;
   animation: dropdownFadeIn 0.2s ease;
   
@@ -846,7 +872,7 @@
   gap: 8px;
   
   &:hover {
-    transform: translateY(-1px);
+    transform: translateY(-2px);
   }
   
   &:active {
