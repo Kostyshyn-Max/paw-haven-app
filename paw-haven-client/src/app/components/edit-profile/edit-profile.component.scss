@@ -1,17 +1,27 @@
 @import '../../../assets/styles/variables';
 
+.edit-profile {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, $background2-color 0%, $background-color 100%);
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .edit-profile-container {
   max-width: 800px;
   margin: 2rem auto;
   padding: 2rem;
-  background-color: #fff;
   border-radius: $border-radius-lg;
   box-shadow: 0 15px 45px rgba($primary-color, 0.15);
   border: 3px solid rgba($primary-color, 0.15);
   position: relative;
   overflow: hidden;
   animation: cardAppear 0.8s ease forwards;
-
+  background-color: white;
   @media (max-width: 768px) {
     padding: 1.5rem;
     margin: 1.5rem 1rem;
