@@ -52,3 +52,8 @@ export interface PetHealthStatus {
   id: number;
   title: string;
 }
+
+export interface ChangePetCardOwnerModel {
+  petCardId: number;
+  organisationId: number;
+}

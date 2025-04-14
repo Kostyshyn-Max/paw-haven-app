@@ -1,8 +1,8 @@
 <div class="profile-section">
   <div class="profile-container">
     <div *ngIf="loading" class="loading-state">
-      <app-paw-loader 
-        message="Завантаження інформації про профіль..." 
+      <app-paw-loader
+        message="Завантаження інформації про профіль..."
         size="medium">
       </app-paw-loader>
     </div>
@@ -58,7 +58,7 @@
             <p>{{ userProfile.organisation.description }}</p>
           </div>
           <div class="info-item" *ngIf="userProfile.organisation.location">
-            <label>Розсташуання:</label>
+            <label>Розташуання:</label>
             <p>{{ userProfile.organisation.location }}</p>
           </div>
           <div class="info-item" *ngIf="userProfile.organisation.phoneNumber">
@@ -83,8 +83,8 @@
         <h3>Оголошення користувача</h3>
 
         <div *ngIf="loadingPetCards" class="loading-state">
-          <app-paw-loader 
-            message="Завантаження оголошень..." 
+          <app-paw-loader
+            message="Завантаження оголошень..."
             size="medium">
           </app-paw-loader>
         </div>
@@ -94,7 +94,10 @@
         </div>
 
         <div *ngIf="!loadingPetCards && !petCardError && userPetCards && userPetCards.length > 0" class="pet-cards-grid">
-          <app-card *ngFor="let pet of userPetCards" [pet]="pet" class="pet-card"></app-card>
+          <div *ngFor="let pet of userPetCards" class="pet-card-wrapper">
+            <app-card  [pet]="pet" class="pet-card"></app-card>
+            <button class="pet-card__button" (click)="transferPet(pet.id)">Передати організації</button>
+          </div>
         </div>
 
         <div *ngIf="!loadingPetCards && !petCardError && (!userPetCards || userPetCards.length === 0)" class="no-announcements">
@@ -108,8 +111,8 @@
         <h3>Збереженні оголошення</h3>
 
         <div *ngIf="isLoadingFavouritePetCards" class="loading-state">
-          <app-paw-loader 
-            message="Завантаження збережених оголошень..." 
+          <app-paw-loader
+            message="Завантаження збережених оголошень..."
             size="medium">
           </app-paw-loader>
         </div>

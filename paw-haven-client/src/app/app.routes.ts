@@ -8,7 +8,9 @@ import { OrganisationDetailsComponent } from './components/organisation-details/
 import { OrganisationsComponent } from './components/organisations/organisations.component';
 import { PetCardFormComponent } from './components/pet-card-form/pet-card-form.component';
 import { PetDetailsComponent } from './components/pet-details/pet-details.component';
+import { PetGiftHomeComponent } from './components/pet-gift-home/pet-gift-home.component';
 import { PetRequestComponent } from './components/pet-request/pet-request.component';
+import { PetTransferComponent } from './components/pet-transfer/pet-transfer.component';
 import { PetsStoriesComponent } from './components/pets-stories/pets-stories.component';
 import { PetsComponent } from './components/pets/pets.component';
 import { ProfileComponent } from './components/profile/profile.component';
@@ -32,5 +34,7 @@ export const routes: Routes = [
   { path: 'blog/:id', component: BlogDetailsComponent },
   { path: 'stories', component: PetsStoriesComponent },
   { path: 'pet/request', component: PetRequestComponent},
+  { path: 'pet/gift/home', component: PetGiftHomeComponent },
+  { path: 'pet/transfer', component: PetTransferComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' }
 ];
