@@ -1,0 +1,106 @@
+@import '_variables';
+
+.pet-model {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 4rem;
+  background: linear-gradient(135deg, $background2-color, lighten($background-color, 10%));
+  font-family: 'Mariupol', sans-serif;
+
+  &__card {
+    background: #fff;
+    border-radius: 1.5rem;
+    padding: 2rem;
+    max-width: 500px;
+    width: 100%;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    border: 2px solid $text-color;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  &__label {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: $text-color;
+  }
+
+  &__input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  &__icon {
+    position: absolute;
+    left: 1rem;
+    width: 20px;
+    height: 20px;
+    opacity: 0.6;
+  }
+
+  &__input {
+    width: 100%;
+    padding: 1rem 1rem 1rem 2.8rem;
+    border-radius: 1rem;
+    border: 1.5px solid rgba(0, 0, 0, 0.08);
+    background: #f8f9fa;
+    font-size: 1rem;
+    color: $text-color;
+
+    &::placeholder {
+      color: rgba($text-color, 0.4);
+    }
+
+    &:focus {
+      outline: none;
+      border-color: $background-color;
+      background: #fff;
+      box-shadow: 0 0 0 4px rgba($background-color, 0.15);
+    }
+
+    &:is(select) {
+      appearance: none;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>');
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      background-size: 1rem;
+      padding-right: 2.5rem;
+    }
+  }
+
+  &__submit {
+    padding: 1rem;
+    background: $button-color;
+    color: #fff;
+    border: none;
+    border-radius: 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &:hover {
+      background: darken($button-color, 5%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba($button-color, 0.25);
+    }
+
+    &:active {
+      transform: none;
+      box-shadow: 0 4px 8px rgba($button-color, 0.2);
+    }
+  }
+}

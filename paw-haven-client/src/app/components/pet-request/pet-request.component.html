@@ -1,0 +1,73 @@
+<section class="pet-model">
+  <div class="pet-model__card">
+    <form class="pet-model__form" (ngSubmit)="submitModel()">
+      <div class="pet-model__field">
+        <label for="name" class="pet-model__label">Імʼя тварини</label>
+        <div class="pet-model__input-wrapper">
+          <img src="assets/icons/paw.svg" class="pet-model__icon" alt="Лапа" />
+          <input
+            id="name"
+            type="text"
+            name="name"
+            class="pet-model__input"
+            placeholder="Введіть імʼя тварини"
+            [(ngModel)]="name"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="pet-model__field">
+        <label for="petType" class="pet-model__label">Вік тварини</label>
+        <div class="pet-model__input-wrapper">
+          <img src="assets/icons/category.svg" alt="Категорія" class="pet-model__icon" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'24\' height=\'24\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'><path d=\'M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\'/><polyline points=\'9 22 9 12 15 12 15 22\'/></svg>'">
+          <select
+            id="ageRange"
+            class="pet-model__input"
+            [(ngModel)]="ageRange"
+            name="ageRange"
+            required
+          >
+            <option value="" disabled>Виберіть вік тварини</option>
+            <option *ngFor="let age of ageRanges" [ngValue]="age">{{ age.name }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="pet-model__field">
+        <label for="petType" class="pet-model__label">Вид тварини</label>
+        <div class="pet-model__input-wrapper">
+          <img src="assets/icons/category.svg" alt="Категорія" class="pet-model__icon" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'24\' height=\'24\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'><path d=\'M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\'/><polyline points=\'9 22 9 12 15 12 15 22\'/></svg>'">
+          <select
+            id="petType"
+            class="pet-model__input"
+            [(ngModel)]="petType"
+            name="petType"
+            required
+          >
+            <option value="" disabled selected>Виберіть вид тварини</option>
+            <option *ngFor="let type of petTypes" [value]="type.title">{{ type.title }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="pet-model__field">
+        <label for="location" class="pet-model__label">Місцезнаходження</label>
+        <div class="pet-model__input-wrapper">
+          <img src="assets/icons/location.svg" class="pet-model__icon" />
+          <input
+            id="location"
+            type="text"
+            name="location"
+            class="pet-model__input"
+            placeholder="Укажіть місцезнаходження"
+            [(ngModel)]="location"
+            required
+          />
+        </div>
+      </div>
+
+      <button type="submit" class="pet-model__submit">Підтвердити</button>
+    </form>
+  </div>
+</section>

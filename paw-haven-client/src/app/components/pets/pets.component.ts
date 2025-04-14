@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { PetCard, PetType } from '../../models/pet-card.model';
 import { PetCardService } from '../../services/pet-card.service';
 import { PetTypeService } from '../../services/pet-type.service';
@@ -39,7 +39,8 @@ export class PetsComponent implements OnInit {
 
   constructor(
     private petCardService: PetCardService,
-    private petTypeService: PetTypeService
+    private petTypeService: PetTypeService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -114,5 +115,16 @@ export class PetsComponent implements OnInit {
     this.locationQuery = '';
     this.searchQuery = '';
     this.applyFilters();
+  }
+
+  redirectToRequest(): void {
+    this.router.navigate(['pet/request'], {
+      queryParams: {
+        name: this.searchQuery ?? '',
+        ageRange: this.selectedAge?.name ?? '',
+        petType: this.selectedType ?? '',
+        location: this.locationQuery ?? ''
+      }
+    });
   }
 }
