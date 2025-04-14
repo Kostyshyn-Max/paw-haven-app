@@ -59,4 +59,8 @@ export class PetCardService {
   changeOwner(model: ChangePetCardOwnerModel): Observable<any> {
     return this.http.put(`${this.apiUrl}/change/owner`, model);
   }
+
+  deletePetCard(petCardId: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${petCardId}`);
+  }
 }

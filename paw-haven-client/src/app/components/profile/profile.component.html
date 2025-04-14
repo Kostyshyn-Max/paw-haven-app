@@ -96,7 +96,12 @@
         <div *ngIf="!loadingPetCards && !petCardError && userPetCards && userPetCards.length > 0" class="pet-cards-grid">
           <div *ngFor="let pet of userPetCards" class="pet-card-wrapper">
             <app-card  [pet]="pet" class="pet-card"></app-card>
-            <button class="pet-card__button" (click)="transferPet(pet.id)">Передати організації</button>
+            <div class="pet-card__buttons">
+              <button class="pet-card__button" (click)="transferPet(pet.id)">Передати організації</button>
+              <button class="pet-card__button-remove" (click)="deletePetCard(pet.id)">
+                <img src="assets/icons/trash.svg" alt="Trash icon" />
+              </button>
+            </div>
           </div>
         </div>
 

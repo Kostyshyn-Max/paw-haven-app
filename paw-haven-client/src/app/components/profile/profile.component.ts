@@ -225,4 +225,18 @@ export class ProfileComponent implements OnInit {
   transferPet(petId: number): void {
     this.router.navigate(['/pet/transfer'], { queryParams: { petId } });
   }
+
+  deletePetCard(petId: number): void {
+    this.petCardService.deletePetCard(petId).subscribe({
+      next: () => {
+        setTimeout(() => {
+          this.loadingPetCards = true;
+          this.loadUserPetCards();
+        }, 100);
+      },
+      error: (err) => {
+        console.error(err)
+      }
+    })
+  }
 }
