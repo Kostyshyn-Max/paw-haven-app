@@ -1,0 +1,28 @@
+<section class="pet-transfer">
+  <div class="pet-transfer__card">
+    <h1 class="pet-transfer__title">Ви хочете передати:</h1>
+    <app-card [pet]="this.petCard!"></app-card>
+    <form class="pet-transfer__form" (ngSubmit)="submitForm()">
+      <div class="pet-transfer__field">
+        <label for="petType" class="pet-transfer__label">Виберіть організацію якій хочете передати тварину</label>
+        <div class="pet-transfer__input-wrapper">
+          <img src="assets/icons/category.svg" alt="Категорія" class="pet-transfer__icon" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'24\' height=\'24\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'><path d=\'M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\'/><polyline points=\'9 22 9 12 15 12 15 22\'/></svg>'">
+          <select
+            id="organisation"
+            class="pet-transfer__input"
+            [(ngModel)]="selectedOrganization"
+            name="organisation"
+            required
+          >
+            <option value="" disabled selected [value]="0">Організація</option>
+            <option *ngFor="let type of organizations" [value]="type.id">{{ type.name }}</option>
+          </select>
+        </div>
+      </div>
+
+      <button type="submit" class="pet-transfer__submit">
+        Продовжити
+      </button>
+    </form>
+  </div>
+</section>

@@ -9,7 +9,7 @@
   <div *ngIf="petDetails" class="pet-details__card">
 
 
-    
+
     <div class="pet-details__card-header">
       <div class="pet-details__carousel-container">
         <!-- Головне зображення -->
@@ -17,33 +17,33 @@
           <button *ngIf="petDetails?.photos && petDetails.photos.length > 1" class="pet-details__arrow-button pet-details__arrow-button--left" (click)="prevImage()">
             <img src="assets/icons/pet-details/arrow-left.svg" alt="Стрілка вліво" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'24\' height=\'24\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'><path d=\'M19 12H5M12 19l-7-7 7-7\'/></svg>'">
           </button>
-          
+
           <div class="pet-details__photo-wrapper">
             <img [src]="petDetails.photos && petDetails.photos.length > 0 ? petDetails.photos[selectedPhotoIndex].petPhotoLink : 'assets/images/placeholder-pet.jpg'" alt="Фото тварини" class="pet-details__main-photo" />
-            
+
             <!-- Індикатор кількості фото -->
             <div class="pet-details__photo-counter" *ngIf="petDetails?.photos && petDetails.photos.length > 1">
               {{ selectedPhotoIndex + 1 }} / {{ petDetails.photos.length }}
             </div>
           </div>
-          
+
           <button *ngIf="petDetails?.photos && petDetails.photos.length > 1" class="pet-details__arrow-button pet-details__arrow-button--right" (click)="nextImage()">
             <img src="assets/icons/pet-details/arrow-right.svg" alt="Стрілка вправо" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'24\' height=\'24\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'><path d=\'M5 12h14M12 5l7 7-7 7\'/></svg>'">
           </button>
         </div>
-        
+
         <!-- Мініатюри зображень -->
         <div class="pet-details__thumbnails" *ngIf="petDetails?.photos && petDetails.photos.length > 1">
-          <div 
-            *ngFor="let photo of petDetails.photos; let i = index" 
-            class="pet-details__thumbnail-item" 
+          <div
+            *ngFor="let photo of petDetails.photos; let i = index"
+            class="pet-details__thumbnail-item"
             [class.active]="i === selectedPhotoIndex"
             (click)="selectImage(i)">
             <img [src]="photo.petPhotoLink" alt="Мініатюра фото тварини" />
           </div>
         </div>
       </div>
-      
+
       <div class="pet-details__card-hero">
         <div class="hero__head">
           <div class="pet-details__name-block">
@@ -139,7 +139,7 @@
         </div>
       </div>
     </div>
-    
+
     <div class="pet-details__responsibility-info">
       <h2 class="pet-details__section-title">Важлива інформація:</h2>
       <div class="pet-details__responsibility-content">
@@ -147,23 +147,23 @@
           <p class="pet-details__responsibility-title">Готові до нового друга?</p>
           <p class="pet-details__responsibility-text">Підготуйте простір. Переконайтесь, що у вашому домі є безпечне, комфортне місце для нового улюбленця — чи це клітка для папуги, куточок для кота, або тераріум для ящірки.</p>
         </div>
-        
+
         <div class="pet-details__responsibility-item">
           <p class="pet-details__responsibility-title">Врахуйте характер і потреби</p>
           <p class="pet-details__responsibility-text">Кожна тварина має свій темп, звички й потреби. Деякі потребують багато спілкування (наприклад, щурики чи собаки), інші — більше спокою (як деякі кішки чи рибки).</p>
         </div>
-        
+
         <div class="pet-details__responsibility-item">
           <p class="pet-details__responsibility-title">Домашній улюбленець — це не на тиждень.</p>
           <p class="pet-details__responsibility-text">Це друг на роки. Годування, візити до ветеринара, увага і любов — усе це входить у «пакет» справжнього господаря.</p>
         </div>
       </div>
     </div>
-    
+
     <div class="pet-details__buttons">
       <h2 class="pet-details__section-title">Основні дії:</h2>
       <div class="pet-details__buttons-container">
-        <button class="pet-details__action-button pet-details__adopt-button">
+        <button class="pet-details__action-button pet-details__adopt-button" (click)="redirectToGiftHome()">
           <img src="assets/icons/home.svg" alt="Домівка" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'24\' height=\'24\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'white\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'><path d=\'M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\'/><polyline points=\'9 22 9 12 15 12 15 22\'/></svg>'">
           Подарувати дім
         </button>
@@ -179,8 +179,8 @@
     </div>
   </div>
   <div *ngIf="isLoading" class="pet-details__loading">
-    <app-paw-loader 
-      message="Завантаження інформації про тварину..." 
+    <app-paw-loader
+      message="Завантаження інформації про тварину..."
       size="large">
     </app-paw-loader>
   </div>

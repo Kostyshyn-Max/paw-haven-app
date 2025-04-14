@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
-import { PetCard, PetCardDetails } from '../models/pet-card.model';
+import { ChangePetCardOwnerModel, PetCard, PetCardDetails } from '../models/pet-card.model';
 
 @Injectable({
   providedIn: 'root'
@@ -54,5 +54,13 @@ export class PetCardService {
         );
       })
     );
+  }
+
+  changeOwner(model: ChangePetCardOwnerModel): Observable<any> {
+    return this.http.put(`${this.apiUrl}/change/owner`, model);
+  }
+
+  deletePetCard(petCardId: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${petCardId}`);
   }
 }

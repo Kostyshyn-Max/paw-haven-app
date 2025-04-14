@@ -5,12 +5,11 @@ import { catchError, of, switchMap } from 'rxjs';
 import { PetCard } from '../../models/pet-card.model';
 import { AuthService } from '../../services/auth.service';
 import { JwtService } from '../../services/jwt.service';
+import { OrganisationService } from '../../services/organisation.service';
 import { PetCardService } from '../../services/pet-card.service';
 import { UserFavouritesService } from '../../services/user-favourites.service';
 import { UserProfileModel, UserService } from '../../services/user.service';
 import { CardComponent } from '../shared/card/card.component';
-import { OrganisationService } from '../../services/organisation.service';
-import { Organization } from '../../models/organization.model';
 import { PawLoaderComponent } from '../shared/paw-loader/paw-loader.component';
 
 @Component({
@@ -73,7 +72,7 @@ export class ProfileComponent implements OnInit {
                 this.loading = false;
                 return of(null);
               }
-              
+
               // Check if the current user is the owner of this organization
               const isLoggedIn = this.authService.isAuthenticated();
               const ownerId = organisation.ownerId;
@@ -84,7 +83,7 @@ export class ProfileComponent implements OnInit {
                 this.router.navigate(['/profile', ownerId]);
                 return of(null);
               }
-              
+
               // Now get the user profile of the organization owner
               return this.userService.getUserProfile(ownerId).pipe(
                 catchError(err => {
@@ -103,12 +102,12 @@ export class ProfileComponent implements OnInit {
             })
           );
         }
-        
+
         // If not organization view, proceed with normal profile view
         // Check if the viewed profile is the current user's profile
         const isLoggedIn = this.authService.isAuthenticated();
         this.isCurrentUser = isLoggedIn && this.jwtService.isCurrentUserProfile(id);
-        
+
         return this.userService.getUserProfile(id).pipe(
           catchError(err => {
             console.error('Помилка при завантаженні профілю:', err);
@@ -130,7 +129,7 @@ export class ProfileComponent implements OnInit {
           this.userProfile = profile;
           // After profile loaded successfully, load user's pet cards
           this.loadUserPetCards();
-          
+
           // Only load favorites if this is the current user's profile
           if (this.isCurrentUser) {
             this.loadUserFavouritePetCards();
@@ -190,7 +189,7 @@ export class ProfileComponent implements OnInit {
 
   loadUserFavouritePetCards(): void {
     if (!this.userProfile) return;
-    
+
     // Only load favorites if this is the current user
     if (!this.isCurrentUser) {
       this.isLoadingFavouritePetCards = false;
@@ -221,5 +220,23 @@ export class ProfileComponent implements OnInit {
 
   navigateToCreatePetCard(): void {
     this.router.navigate(['/pets/add']);
+  }
+
+  transferPet(petId: number): void {
+    this.router.navigate(['/pet/transfer'], { queryParams: { petId } });
+  }
+
+  deletePetCard(petId: number): void {
+    this.petCardService.deletePetCard(petId).subscribe({
+      next: () => {
+        setTimeout(() => {
+          this.loadingPetCards = true;
+          this.loadUserPetCards();
+        }, 100);
+      },
+      error: (err) => {
+        console.error(err)
+      }
+    })
   }
 }

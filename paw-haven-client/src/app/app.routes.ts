@@ -1,19 +1,21 @@
 import { Routes } from '@angular/router';
+import { BlogDetailsComponent } from './components/blog-details/blog-details.component';
 import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
 import { HomeComponent } from './components/home/home.component';
-import { NewsComponent } from './components/news/news.component';
 import { NewsDetailsComponent } from './components/news-details/news-details.component';
+import { NewsComponent } from './components/news/news.component';
+import { OrganisationDetailsComponent } from './components/organisation-details/organisation-details.component';
+import { OrganisationsComponent } from './components/organisations/organisations.component';
 import { PetCardFormComponent } from './components/pet-card-form/pet-card-form.component';
 import { PetDetailsComponent } from './components/pet-details/pet-details.component';
-import { PetsComponent } from './components/pets/pets.component';
+import { PetGiftHomeComponent } from './components/pet-gift-home/pet-gift-home.component';
+import { PetRequestComponent } from './components/pet-request/pet-request.component';
+import { PetTransferComponent } from './components/pet-transfer/pet-transfer.component';
 import { PetsStoriesComponent } from './components/pets-stories/pets-stories.component';
+import { PetsComponent } from './components/pets/pets.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
-import { OrganisationService } from './services/organisation.service';
-import { OrganisationsComponent } from './components/organisations/organisations.component';
-import { OrganisationDetailsComponent } from './components/organisation-details/organisation-details.component';
-import { BlogDetailsComponent } from './components/blog-details/blog-details.component';
 
 export const routes: Routes = [
   { path: 'sign-in', component: SignInComponent },
@@ -31,5 +33,8 @@ export const routes: Routes = [
   { path: 'blog', component: PetsStoriesComponent },
   { path: 'blog/:id', component: BlogDetailsComponent },
   { path: 'stories', component: PetsStoriesComponent },
+  { path: 'pet/request', component: PetRequestComponent},
+  { path: 'pet/gift/home', component: PetGiftHomeComponent },
+  { path: 'pet/transfer', component: PetTransferComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' }
 ];
