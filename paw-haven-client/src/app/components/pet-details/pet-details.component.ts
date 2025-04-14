@@ -1,12 +1,12 @@
 import { CommonModule, Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PetCardDetails, PetCard } from '../../models/pet-card.model';
+import { PetCard, PetCardDetails } from '../../models/pet-card.model';
+import { AuthService } from '../../services/auth.service';
 import { PetCardService } from '../../services/pet-card.service';
 import { UserFavouritesService } from '../../services/user-favourites.service';
-import { AuthService } from '../../services/auth.service';
-import { PawLoaderComponent } from '../shared/paw-loader/paw-loader.component';
 import { CardComponent } from '../shared/card/card.component';
+import { PawLoaderComponent } from '../shared/paw-loader/paw-loader.component';
 
 @Component({
   selector: 'app-pet-details',
@@ -53,7 +53,7 @@ export class PetDetailsComponent implements OnInit {
       next: (petDetails) => {
         this.petDetails = petDetails;
         this.isLoading = false;
-        
+
         if (this.isAuthenticated) {
           this.checkIfFavorite(petId);
         }
@@ -78,14 +78,14 @@ export class PetDetailsComponent implements OnInit {
 
   toggleFavorite(): void {
     if (!this.isAuthenticated) {
-      this.router.navigate(['/login'], { 
+      this.router.navigate(['/login'], {
         queryParams: { returnUrl: this.router.url }
       });
       return;
     }
 
     if (!this.petDetails) return;
-    
+
     if (this.isFavorite) {
       this.userFavouritesService.removeFavourite(this.petDetails.id).subscribe({
         next: () => {
@@ -165,7 +165,7 @@ export class PetDetailsComponent implements OnInit {
   goBack(): void {
     this.location.back();
   }
-  
+
   // Convert PetCardDetails to PetCard for the card component
   convertToPetCard(details: PetCardDetails): PetCard {
     return {
@@ -173,10 +173,14 @@ export class PetDetailsComponent implements OnInit {
       name: details.name,
       age: details.age,
       location: details.location,
-      petPhoto: details.photos && details.photos.length > 0 
-        ? { petPhotoLink: details.photos[0].petPhotoLink } 
+      petPhoto: details.photos && details.photos.length > 0
+        ? { petPhotoLink: details.photos[0].petPhotoLink }
         : { petPhotoLink: 'assets/images/placeholder-pet.jpg' },
       petType: details.petType
     };
+  }
+
+  redirectToGiftHome(): void {
+    this.router.navigate(['/pet/gift/home']);
   }
 }

@@ -80,12 +80,9 @@
     </div>
 
     <div *ngIf="!isLoading && !errorMessage && filteredPetCards.length === 0" class="no-results">
-      <svg width="64" height="64" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2s10 4.477 10 10z"
-          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      <h3>Немає результатів</h3>
-      <p>Спробуйте змінити параметри фільтрів</p>
+      <img src="assets/icons/nothing.svg" alt="Nothing found icon" />
+      <p>Упс, за Вашим запитом нічого не знайдено. <br/> Змініть фільтри або залишіть свій запит і ми надішлемо його організаціям</p>
+      <button class="request-button" (click)="redirectToRequest()">Залишити запит</button>
     </div>
 
     <div *ngIf="!isLoading && !errorMessage && filteredPetCards.length > 0" class="pets-grid">
