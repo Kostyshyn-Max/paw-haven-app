@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PawHaven - Створити оголошення</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="container">
+  <a href="#" class="back-arrow">←</a>
+  <div class="form-container">
+    <h1>Створити нове оголошення:</h1>
+
+    <div class="form-content">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="petName">Ім'я тварини</label>
+          <input type="text" id="petName" class="form-control" placeholder="Введіть ім'я тварини">
+        </div>
+        <div class="form-group">
+          <label for="petType">Вид</label>
+          <div class="select-wrapper">
+            <select id="petType" class="form-control">
+              <option selected disabled>Оберіть вид тварини</option>
+              <option>Кішка</option>
+              <option>Собака</option>
+              <option>Птах</option>
+              <option>Гризун</option>
+              <option>Рептилія</option>
+              <option>Амфібія</option>
+              <option>Фермерська тварина (коза, ...)</option>
+              <option>Екзотична тварина</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group full-width">
+          <label>Фото тварини:</label>
+          <div class="photo-upload">
+            <span class="plus">+</span>
+            <p>Додайте фото</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="petAge">Вік (місяці)</label>
+          <input type="text" id="petAge" class="form-control" placeholder="Введіть вік тварини в місяцях">
+        </div>
+        <div class="form-group">
+          <label for="petGender">Стать</label>
+          <div class="select-wrapper">
+            <select id="petGender" class="form-control">
+              <option selected disabled>Оберіть стать тварини</option>
+              <option>Самець</option>
+              <option>Самка</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="vaccinated">Стан здоров'я</label>
+          <div class="select-wrapper">
+            <select id="vaccinated" class="form-control">
+              <option selected disabled>Оберіть стан здоров'я</option>
+              <option>Повністю здоровий</option>
+              <option>Реабілітований</option>
+              <option>Потребує лікування</option>
+              <option>Відновлюється</option>
+              <option>Критичний</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group full-width">
+          <label for="healthStatus">Опис медичної карти:</label>
+          <textarea id="healthStatus" class="form-control" placeholder="Опишіть медичну історію тварини"></textarea>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group full-width">
+          <label for="description">Опис:</label>
+          <textarea id="description" class="form-control" placeholder="Розкажіть про характер, звички та особливі потреби тварини..."></textarea>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group full-width">
+          <label for="location">Локація</label>
+          <input type="text" id="location" class="form-control" placeholder="Укажіть місцезнаходження тварини">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <button class="publish-btn">Опублікувати</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
