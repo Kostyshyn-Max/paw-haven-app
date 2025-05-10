@@ -1,0 +1,103 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: #E2E8DD;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.chat-window {
+  background-color: rgba(252, 246, 189, 0.9); /* Колір фону */
+  padding: 24px;
+  border: 5px solid #143642;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 700px;
+  height: 300px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+
+.chat-window::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("paw-print.png");
+  background-blend-mode: soft-light;
+  background-size: 760px 350px;
+  background-repeat: repeat;
+  filter: grayscale(100%); /* Застосовуємо фільтр лише до лапок */
+  opacity: 0.5;
+}
+
+.chat-header {
+  align-self: flex-start;
+  background-color: #ffffff;
+  border: 2px solid #143642;
+  padding: 10px 18px;
+  border-radius: 20px;
+  font-size: 16px;
+  font-weight: 500;
+  z-index: 2;
+}
+
+.chat-messages {
+  align-self: flex-start;
+  margin-left: 525px;
+  margin-top: 100px;
+  background-color: #ffffff;
+  border: 1px solid #dcdcdc;
+  padding: 10px 18px;
+  border-radius: 20px;
+  font-size: 16px;
+  font-weight: 500;
+  position: relative;
+  z-index: 2;
+}
+
+.chat-bubble {
+  display: flex;
+  align-items: center;
+}
+
+.check-icon {
+  width: 15px;
+  height: 15px;
+  margin-left: 5px;
+}
+
+.chat-input {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  z-index: 2;
+}
+
+.chat-input input {
+  flex-grow: 1;
+  padding: 12px;
+  border-radius: 10px;
+  border: 2px solid #143642;
+  outline: none;
+  font-size: 15px;
+}
+
+.chat-input button {
+  padding: 12px 25px;
+  margin-left: 15px;
+  border: none;
+  border-radius: 20px;
+  background-color: #1e1e1e;
+  color: #fff;
+  font-size: 15px;
+  cursor: pointer;
+}
